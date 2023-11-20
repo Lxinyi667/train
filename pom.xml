@@ -20,6 +20,7 @@
         <module>member</module>
         <module>member</module>
         <module>common</module>
+        <module>gateway</module>
     </modules>
 
     <properties>

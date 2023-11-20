@@ -1,21 +1,5 @@
 <template>
-    <a-layout id="components-layout-demo-top-side-2">
-        <!-- <a-layout-header class="header">
-            <div class="logo" />
-            <a-menu
-                v-model:selectedKeys="selectedKeys1"
-                theme="dark"
-                mode="horizontal"
-                :style="{lineHeight:'64px'}"
-            >
-                <a-menu-item key="1">nav 1</a-menu-item>
-                <a-menu-item key="2">nav 2</a-menu-item>
-                <a-menu-item key="3">nav 3</a-menu-item>
-            </a-menu>
-        </a-layout-header> -->
-        <TheHeaderView></TheHeaderView>
-    <a-layout>
-        <!-- <a-layout-sider width="200" style="background:#fff">
+<a-layout-sider width="200" style="background:#fff">
             <a-menu
             v-model:selectedKeys="selectedKeys2"
             v-model:openKeys="openKeys"
@@ -59,48 +43,12 @@
                 <a-menu-item key="12">option12</a-menu-item>
             </a-sub-menu>
         </a-menu>
-    </a-layout-sider> -->
-    <the-sider-view></the-sider-view>
-    <a-layout style="padding:0 24px24px">
-        <a-breadcrumb style="margin:16px 0">
-            <a-breadcrumb-item>Home</a-breadcrumb-item>
-            <a-breadcrumb-item>List</a-breadcrumb-item>
-            <a-breadcrumb-item>App</a-breadcrumb-item>
-        </a-breadcrumb>
-    <a-layout-content
-    :style="{
-    background:'#fff',
-    padding:'24px',
-    margin:0,
-    minHeight:'280px',
-    }"
-    >
-    Content
-    </a-layout-content>
-    </a-layout>
-    </a-layout>
-    </a-layout>
+    </a-layout-sider>
 </template>
 <script setup>
+import { ref } from 'vue'
 
-import TheHeaderView from '@/components/the-header.vue'
-import TheSiderView from '@/components/the-sider.vue'
-
+const selectedKeys2 = ref(['1'])
+const openKeys = ref(['sub1'])
 </script>
-
-<style scoped>
-#components-layout-demo-top-side-2 .logo{
-float:left;
-width:120px;
-height:31px;
-margin:16px 24px 16px 0;
-background:rgba(255,255,255,0.3);
-}
-ant-row-rtl #components-layout-demo-top-side-2 .logo{
-float:right;
-margin:16px 0 16px 24px;
-}
-site-layout-background{
-background:#fff;
-}
-</style>
+<style scoped></style>

@@ -1,0 +1,13 @@
+package top.lxyi.train.member.config;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+
+@SpringBootApplication
+@ComponentScan("top.lxyi")
+public class MemberApplication {
+    public static void main(String[] args){
+        SpringApplication.run(MemberApplication.class,args);
+    }
+}

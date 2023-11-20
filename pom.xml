@@ -19,6 +19,7 @@
     <modules>
         <module>member</module>
         <module>member</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -53,6 +54,11 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.28</version>
+            </dependency>
+            <dependency>
+                <groupId>top.lxyi</groupId>
+                <artifactId>common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

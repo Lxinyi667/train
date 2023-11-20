@@ -1,4 +1,4 @@
-package top.lxyi.train.member.aspect;
+package top.lxyi.train.common.aspect;
 
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;

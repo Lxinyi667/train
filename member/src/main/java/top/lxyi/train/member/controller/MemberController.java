@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.lxyi.train.common.resp.CommonResp;
+import top.lxyi.train.member.req.MemberRegisterReq;
 import top.lxyi.train.member.service.MemberService;
 
 @RestController
@@ -19,7 +21,11 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public long register(String mobile){
-        return memberService.register(mobile);
+//    public long register(String mobile){
+//        return memberService.register(mobile);
+//    }
+    public CommonResp<Long> register(MemberRegisterReq req){
+        long register = memberService.register(req);
+        return new CommonResp<>(register);
     }
 }

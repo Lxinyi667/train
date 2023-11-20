@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lxyi.train.common.resp.CommonResp;
+import top.lxyi.train.member.req.MemberLoginReq;
 import top.lxyi.train.member.req.MemberRegisterReq;
 import top.lxyi.train.member.req.MemberSendCodeReq;
+import top.lxyi.train.member.resp.MemberLoginResp;
 import top.lxyi.train.member.service.MemberService;
 
 @RestController
@@ -34,5 +36,10 @@ public class MemberController {
     public CommonResp<Long> sendCode(@Valid MemberSendCodeReq req){
         memberService.sendCode(req);
         return new CommonResp<>();
+    }
+    @PostMapping("/login")
+    public CommonResp<MemberLoginResp> login(@Valid MemberLoginReq req){
+        MemberLoginResp resp = memberService.login(req);
+        return new CommonResp<>(resp);
     }
 }

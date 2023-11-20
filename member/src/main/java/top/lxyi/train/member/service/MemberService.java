@@ -1,6 +1,8 @@
 package top.lxyi.train.member.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.log.AbstractLog;
 import jakarta.annotation.Resource;
@@ -12,8 +14,10 @@ import top.lxyi.train.common.util.SnowUtil;
 import top.lxyi.train.member.domain.Member;
 import top.lxyi.train.member.domain.MemberExample;
 import top.lxyi.train.member.mapper.MemberMapper;
+import top.lxyi.train.member.req.MemberLoginReq;
 import top.lxyi.train.member.req.MemberRegisterReq;
 import top.lxyi.train.member.req.MemberSendCodeReq;
+import top.lxyi.train.member.resp.MemberLoginResp;
 
 import java.util.List;
 
@@ -83,5 +87,30 @@ public class MemberService {
         log.info("保存短信记录表");
 //对接短信通道，发送短信
         log.info("对接短信通道");
+    }
+    public MemberLoginResp login(MemberLoginReq req){
+        String mobile = req.getMobile();
+        String code = req.getCode();
+        Member memberDB = selectByMobile(mobile);
+        //如果手机号不存在，则插入一条记录
+        if (ObjectUtil.isNull(memberDB)){
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_NOT_EXIST);
+        }
+        //校验短信验证码
+        if (!"8888".equals(code)) {
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_CODE_ERROR);
+        }
+            return BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
+    }
+
+    private Member selectByMobile(String mobile) {
+        MemberExample memberExample =new MemberExample();
+        memberExample.createCriteria().andMobileEqualTo(mobile);
+        List<Member> list = memberMapper.selectByExample(memberExample);
+        if (CollUtil.isEmpty(list)) {
+            return null;
+        }else{
+            return list.get(0);
+        }
     }
 }

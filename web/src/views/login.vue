@@ -37,6 +37,7 @@
 </template>
 <script setup>
 import { reactive } from 'vue'
+import axios from 'axios'
 const loginForm = reactive({
   mobile: '13000000000',
   code: ''
@@ -47,6 +48,15 @@ const onFinish = (values) => {
 }
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo)
+}
+const sendCode = () => {
+  axios
+    .post('http://localhost:8000/member/member/send-code', {
+      mobile: loginForm.mobile
+    })
+    .then((response) => {
+      console.log(response)
+    })
 }
 </script>
 <style scoped>

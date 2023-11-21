@@ -1,6 +1,6 @@
 <template>
     <a-button type="primary" @click="showModal">新增</a-button>
-    <a-table :dataSource="passengers" :columns="columns" />
+    <a-table :dataSource="passengers" :columns="columns" :pagination="pagination"/>
     <a-modal
     v-model:visible="visible"
     title="乘车人"
@@ -35,7 +35,6 @@ import { notification } from 'ant-design-vue'
 import axios from 'axios'
 
 const visible = ref(false)
-const passengers = ref([])
 
 const passenger = reactive({
   id: undefined,
@@ -46,38 +45,6 @@ const passenger = reactive({
   createTime: undefined,
   updateTime: undefined
 })
-// const dataSource = [
-//   {
-//     key: '1',
-//     name: '胡彦斌',
-//     age: 32,
-//     address: '西湖区湖底公园1号'
-//   },
-//   {
-//     key: '2',
-//     name: '胡彦祖',
-//     age: 42,
-//     address: '西湖区湖底公园1号'
-//   }
-// ]
-
-const columns = [
-  {
-    title: '姓名',
-    dataIndex: 'name',
-    key: 'name'
-  },
-  {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age'
-  },
-  {
-    title: '住址',
-    dataIndex: 'address',
-    key: 'address'
-  }
-]
 const showModal = () => {
   visible.value = true
 }
@@ -93,6 +60,31 @@ const handleOk = () => {
     }
   })
 }
+const passengers = ref([])
+// 分页的三个属性名是固定的
+const pagination = reactive({
+  total: 0,
+  current: 1,
+  pagesize: 2
+})
+
+const columns = [
+  {
+    title: '姓名',
+    dataIndex: 'name',
+    key: 'name'
+  },
+  {
+    title: '身份证',
+    dataIndex: 'idCard',
+    key: 'idCard'
+  },
+  {
+    title: '类型',
+    dataIndex: 'type',
+    key: 'type'
+  }
+]
 const handleQuery = (param) => {
   axios.get('/member/passenger/query-list', {
     params: {
@@ -104,6 +96,9 @@ const handleQuery = (param) => {
       const data = response.data
       if (data.success) {
         passengers.value = data.content.list
+        // 设置分页控件的值
+        pagination.current = param.page
+        pagination.total = data.content.total
       } else {
         notification.error({ description: data.message })
       }
@@ -112,7 +107,7 @@ const handleQuery = (param) => {
 onMounted(() => {
   handleQuery({
     page: 1,
-    size: 2
+    size: pagination.pagesize
   })
 })
 </script>

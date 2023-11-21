@@ -30,6 +30,9 @@
 </template>
 <script setup>
 import { ref, reactive } from 'vue'
+import { notification } from 'ant-design-vue'
+import axios from 'axios'
+
 const visible = ref(false)
 
 const passenger = reactive({
@@ -44,9 +47,17 @@ const passenger = reactive({
 const showModal = () => {
   visible.value = true
 }
-const handleOk = (e) => {
-  console.log(e)
-  visible.value = false
+
+const handleOk = () => {
+  axios.post('/member/passenger/save', passenger).then((response) => {
+    const data = response.data
+    if (data.success) {
+      notification.success({ description: '保存成功！' })
+      visible.value = false
+    } else {
+      notification.error({ description: data.message })
+    }
+  })
 }
 </script>
 <style scoped>

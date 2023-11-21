@@ -75,17 +75,22 @@
     minHeight:'280px',
     }"
     >
-    Content
+    所有会员总数：{{ count }}
     </a-layout-content>
     </a-layout>
     </a-layout>
     </a-layout>
 </template>
 <script setup>
-
+import { ref } from 'vue'
 import TheHeaderView from '@/components/the-header.vue'
 import TheSiderView from '@/components/the-sider.vue'
+import axios from 'axios'
 
+const count = ref(0)
+axios.get('/member/member/count').then((response) => {
+  count.value = response.data
+})
 </script>
 
 <style scoped>

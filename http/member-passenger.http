@@ -3,7 +3,7 @@ Content-Type:application/json
 
 {
   "memberId": "1",
-  "name": "lxyi",
+  "name": "",
   "idCard": "123456789",
   "type": "1"
 }

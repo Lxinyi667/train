@@ -1,5 +1,11 @@
 <template>
-    <a-button type="primary" @click="showModal">新增</a-button>
+    <p>
+        <a-space>
+            <a-button type="primary" @click="handleQuery()">刷新</a-button>
+            <a-button type="primary" @click="showModal">新增</a-button>
+        </a-space>
+    </p>
+
     <a-table
     :dataSource="passengers"
     :columns="columns"
@@ -92,12 +98,19 @@ const columns = [
   }
 ]
 const handleQuery = (param) => {
-  axios.get('/member/passenger/query-list', {
-    params: {
-      page: param.page,
-      size: param.size
+  if (!param) {
+    param = {
+      page: 1,
+      size: pagination.pageSize
     }
-  })
+  }
+  axios
+    .get('/member/passenger/query-list', {
+      params: {
+        page: param.page,
+        size: param.size
+      }
+    })
     .then((response) => {
       const data = response.data
       if (data.success) {

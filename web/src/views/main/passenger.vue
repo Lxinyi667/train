@@ -1,6 +1,12 @@
 <template>
     <a-button type="primary" @click="showModal">新增</a-button>
-    <a-table :dataSource="passengers" :columns="columns" :pagination="pagination"/>
+    <a-table
+    :dataSource="passengers"
+    :columns="columns"
+    :pagination="pagination"
+    @change="handleTableChange"
+
+    />
     <a-modal
     v-model:visible="visible"
     title="乘车人"
@@ -103,6 +109,13 @@ const handleQuery = (param) => {
         notification.error({ description: data.message })
       }
     })
+}
+const handleTableChange = (pagination) => {
+  console.Log('看看自带的分页参数都有啥：' + pagination)
+  handleQuery({
+    page: pagination.current,
+    size: pagination.pageSize
+  })
 }
 onMounted(() => {
   handleQuery({

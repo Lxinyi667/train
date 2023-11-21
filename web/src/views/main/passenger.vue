@@ -19,12 +19,19 @@
                     title="删除后不可恢复，确认删除？"
                     @confirm="onDelete(record)"
                     ok-text="确认"
-                    cancel-text="取"
+                    cancel-text="取消"
                 >
                     <a style=" color: red">删除</a>
                 </a-popconfirm>
             <a @click="onEdit(record)">编辑</a>
             </a-space>
+        </template>
+        <template v-else-if="column.dataIndex ==='type'">
+            <span v-for="item in PASSENGER_TYPE_ARRAY" :key="item.key">
+                <span v-if="item.key === record.type">
+                {{item.value }}
+                </span>
+            </span>
         </template>
         </template>
     </a-table>

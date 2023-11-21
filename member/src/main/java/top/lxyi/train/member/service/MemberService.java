@@ -2,22 +2,27 @@ package top.lxyi.train.member.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.log.AbstractLog;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import top.lxyi.train.common.context.LoginMemberContext;
 import top.lxyi.train.common.exception.BusinessException;
 import top.lxyi.train.common.exception.BusinessExceptionEnum;
 import top.lxyi.train.common.util.JwtUtil;
 import top.lxyi.train.common.util.SnowUtil;
 import top.lxyi.train.member.domain.Member;
 import top.lxyi.train.member.domain.MemberExample;
+import top.lxyi.train.member.domain.Passenger;
 import top.lxyi.train.member.mapper.MemberMapper;
+import top.lxyi.train.member.mapper.PassengerMapper;
 import top.lxyi.train.member.req.MemberLoginReq;
 import top.lxyi.train.member.req.MemberRegisterReq;
 import top.lxyi.train.member.req.MemberSendCodeReq;
+import top.lxyi.train.member.req.PassengerSaveReq;
 import top.lxyi.train.member.resp.MemberLoginResp;
 
 import java.util.List;
@@ -29,6 +34,8 @@ import java.util.List;
 public class MemberService {
     @Resource
     private MemberMapper memberMapper;
+    @Resource
+    private PassengerMapper passengerMapper;
 
     public int count(){
         return Math.toIntExact(memberMapper.countByExample(null));
@@ -47,6 +54,20 @@ public class MemberService {
 //        memberMapper.insert(member);
 //        return member.getId();
 //    }
+        public void save(PassengerSaveReq req) {
+            DateTime now = DateTime.now();
+            Passenger passenger = BeanUtil.copyProperties(req, Passenger.class);
+            if (ObjectUtil.isNull(passenger.getId())) {
+                passenger.setMemberId(LoginMemberContext.getId());
+                passenger.setId(SnowUtil.getSnowflakeNextId());
+                passenger.setCreateTime(now);
+                passenger.setUpdateTime(now);
+                passengerMapper.insert(passenger);
+            } else {
+                passenger.setUpdateTime(now);
+                passengerMapper.updateByPrimaryKey(passenger);
+            }
+        }
     public long register(MemberRegisterReq req){
         String mobile = req.getMobile();
         MemberExample memberExample = new MemberExample();

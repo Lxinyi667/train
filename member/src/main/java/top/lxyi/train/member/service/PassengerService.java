@@ -8,16 +8,16 @@ import com.github.pagehelper.PageInfo;
 import top.lxyi.train.common.context.LoginMemberContext;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
-iimport top.lxyi.train.member.domain.Passenger;
+import top.lxyi.train.member.domain.Passenger;
 import top.lxyi.train.member.domain.PassengerExample;
 import top.lxyi.train.member.mapper.PassengerMapper;
 import top.lxyi.train.member.req.PassengerQueryReq;
 import top.lxyi.train.member.req.PassengerSaveReq;
-import top.lxyi.train.member.resp.PassengerQueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import top.lxyi.train.member.resp.PassengerQueryResp;
 
 import java.util.List;
 

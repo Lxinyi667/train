@@ -24,7 +24,11 @@ import java.util.List;
 @Slf4j
 public class PassengerService {
     @Resource
+
     private PassengerMapper passengerMapper;
+    public void delete(Long id) {
+        passengerMapper.deleteByPrimaryKey(id);
+    }
     public void save(PassengerSaveReq req) {
         DateTime now = DateTime.now();
         Passenger passenger = BeanUtil.copyProperties(req, Passenger.class);

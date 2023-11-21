@@ -1,4 +1,4 @@
-package top.lxyi.train.member.service;
+package top.lxyi.train.${module}.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
@@ -8,12 +8,12 @@ import com.github.pagehelper.PageInfo;
 import top.lxyi.train.common.context.LoginMemberContext;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
-import top.lxyi.train.member.domain.${Domain};
-import top.lxyi.train.member.domain.${Domain}Example;
-import top.lxyi.train.member.mapper.${Domain}Mapper;
-import top.lxyi.train.member.req.${Domain}QueryReq;
-import top.lxyi.train.member.req.${Domain}SaveReq;
-import top.lxyi.train.member.resp.${Domain}QueryResp;
+iimport top.lxyi.train.${module}.domain.${Domain};
+import top.lxyi.train.${module}.domain.${Domain}Example;
+import top.lxyi.train.${module}.mapper.${Domain}Mapper;
+import top.lxyi.train.${module}.req.${Domain}QueryReq;
+import top.lxyi.train.${module}.req.${Domain}SaveReq;
+import top.lxyi.train.${module}.resp.${Domain}QueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

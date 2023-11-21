@@ -1,12 +1,12 @@
-package top.lxyi.train.member.controller;
+package top.lxyi.train.${module}.controller;
 
 import top.lxyi.train.common.context.LoginMemberContext;
 import top.lxyi.train.common.resp.CommonResp;
 import top.lxyi.train.common.resp.PageResp;
-import top.lxyi.train.member.req.${Domain}QueryReq;
-import top.lxyi.train.member.req.${Domain}SaveReq;
-import top.lxyi.train.member.resp.${Domain}QueryResp;
-import top.lxyi.train.member.service.${Domain}Service;
+import top.lxyi.train.${module}.req.${Domain}QueryReq;
+import top.lxyi.train.${module}.req.${Domain}SaveReq;
+import top.lxyi.train.${module}.resp.${Domain}QueryResp;
+import top.lxyi.train.${module}.service.${Domain}Service;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

@@ -8,7 +8,7 @@ import com.github.pagehelper.PageInfo;
 import top.lxyi.train.common.context.LoginMemberContext;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
-import top.lxyi.train.member.domain.Passenger;
+iimport top.lxyi.train.member.domain.Passenger;
 import top.lxyi.train.member.domain.PassengerExample;
 import top.lxyi.train.member.mapper.PassengerMapper;
 import top.lxyi.train.member.req.PassengerQueryReq;

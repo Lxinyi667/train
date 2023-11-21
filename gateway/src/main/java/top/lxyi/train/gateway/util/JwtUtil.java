@@ -21,11 +21,11 @@ public class JwtUtil {
     /**
      * 盐值很重要，不能泄漏，且每个项目都应该不一样，可以放到配置文件中
      */
-    private static final String key = "mqxu12306";
+    private static final String key = "lxyi12306";
 
     public static String createToken(Long id, String mobile) {
         DateTime now = DateTime.now();
-        DateTime expTime = now.offsetNew(DateField.SECOND, 10);
+        DateTime expTime = now.offsetNew(DateField.SECOND, 24);
         Map<String, Object> payload = new HashMap<>();
         // 签发时间
         payload.put(JWTPayload.ISSUED_AT, now);

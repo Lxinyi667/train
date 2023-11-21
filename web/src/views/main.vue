@@ -76,6 +76,12 @@
     }"
     >
     所有会员总数：{{ count }}
+     <label for="Test">   ❤请选择图书类别:</label>
+        <select id="Test">
+            <option value="1">计算机</option>
+            <option value="2">文学</option>
+            <option value="3">历史</option>
+        </select>
     </a-layout-content>
     </a-layout>
     </a-layout>
@@ -85,12 +91,19 @@
 import { ref } from 'vue'
 import TheHeaderView from '@/components/the-header.vue'
 import TheSiderView from '@/components/the-sider.vue'
-// import axios from 'axios'
+import axios from 'axios'
 
 const count = ref(0)
-// axios.get('/member/member/count').then((response) => {
-//   count.value = response.data
+axios.get('/member/member/count').then((response) => {
+  count.value = response.data
+})
+
+// const selectElement = document.getElementById('Test')
+// selectElement.addEventListener('change', function () {
+//   const selectedValue = selectElement.value
+//   console.log('Selected Book Category: ' + selectedValue)
 // })
+
 </script>
 
 <style scoped>

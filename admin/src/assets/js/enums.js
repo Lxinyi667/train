@@ -7,3 +7,10 @@ TRAIN_TYPE_ARRAY = [
   { code: 'D', desc: '动车' },
   { code: 'K', desc: '快速' }
 ]
+
+SEAT_TYPE_ARRAY = [
+  { code: '1', desc: '一等座' },
+  { code: '2', desc: '二等座' },
+  { code: '3', desc: '软卧' },
+  { code: '4', desc: '硬座' }
+]

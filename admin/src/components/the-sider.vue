@@ -35,6 +35,12 @@
           火车车站
         </router-link>
       </a-menu-item>
+      <a-menu-item key="/train-carriage">
+        <router-link to="/train-carriage">
+          <car-outlined/>
+          火车车厢
+        </router-link>
+      </a-menu-item>
     </a-menu>
   </a-layout-sider>
 </template>

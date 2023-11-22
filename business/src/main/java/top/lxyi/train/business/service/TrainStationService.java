@@ -44,9 +44,12 @@ trainStationMapper.updateByPrimaryKey(trainStation);
 
 public PageResp<TrainStationQueryResp> queryList(TrainStationQueryReq req) {
     TrainStationExample trainStationExample = new TrainStationExample();
-    trainStationExample.setOrderByClause("id desc");
+    //按数据库的 train_code 字段升序排列查询
+    trainStationExample.setOrderByClause("train_code asc,'index' asc");
     TrainStationExample.Criteria criteria = trainStationExample.createCriteria();
-
+    if (ObjectUtil.isNotEmpty(req.getTrainCode())) {
+        criteria.andTrainCodeEqualTo(req.getTrainCode());
+    }
     LOG.info("查询页码：{}", req.getPage());
     LOG.info("每页条数：{}", req.getSize());
     PageHelper.startPage(req.getPage(), req.getSize());

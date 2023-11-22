@@ -36,12 +36,12 @@ public void save(StationSaveReq req) {
     Station station = BeanUtil.copyProperties(req, Station.class);
     if (ObjectUtil.isNull(station.getId())) {
         //保存之前，先校验一键是否存在
-        StationExample stationExample = new StationExample();
-        stationExample.createCriteria().andNameEqualTo(req.getName());
-        List<Station> list = stationMapper.selectByExample(stationExample);
-        if (CollUtil.isNotEmpty(list)){
+        Station stationDB = selectByUnique(req.getName());
+        if (ObjectUtil.isNotEmpty(stationDB)){
             throw new BusinessException(BusinessExceptionEnum.BUSINESS_STATION_NAME_UNIQUE_ERROR);
         }
+
+
 
         station.setId(SnowUtil.getSnowflakeNextId());
         station.setCreateTime(now);
@@ -52,6 +52,18 @@ public void save(StationSaveReq req) {
         stationMapper.updateByPrimaryKey(station);
     }
 }
+
+    private Station selectByUnique(String name) {
+        StationExample stationExample = new StationExample();
+        stationExample.createCriteria().andNameEqualTo(name);
+        List<Station> list = stationMapper.selectByExample(stationExample);
+       if (CollUtil.isNotEmpty(list)){
+           return list.get(0);
+       }else{
+           return null;
+       }
+    }
+
     public List<StationQueryResp> queryAll() {
         StationExample stationExample = new StationExample();
         //根据站名拼音升序排列

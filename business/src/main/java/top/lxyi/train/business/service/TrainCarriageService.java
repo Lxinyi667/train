@@ -1,10 +1,15 @@
 package top.lxyi.train.business.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import top.lxyi.train.business.domain.TrainStation;
+import top.lxyi.train.business.domain.TrainStationExample;
+import top.lxyi.train.common.exception.BusinessException;
+import top.lxyi.train.common.exception.BusinessExceptionEnum;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
 import top.lxyi.train.business.domain.TrainCarriage;
@@ -29,18 +34,38 @@ private static final Logger LOG = LoggerFactory.getLogger(TrainCarriageService.c
 private TrainCarriageMapper trainCarriageMapper;
 
 public void save(TrainCarriageSaveReq req) {
-DateTime now = DateTime.now();
-TrainCarriage trainCarriage = BeanUtil.copyProperties(req, TrainCarriage.class);
-if (ObjectUtil.isNull(trainCarriage.getId())) {
-trainCarriage.setId(SnowUtil.getSnowflakeNextId());
-trainCarriage.setCreateTime(now);
-trainCarriage.setUpdateTime(now);
-trainCarriageMapper.insert(trainCarriage);
-} else {
-trainCarriage.setUpdateTime(now);
-trainCarriageMapper.updateByPrimaryKey(trainCarriage);
+    DateTime now = DateTime.now();
+
+    TrainCarriage trainCarriage = BeanUtil.copyProperties(req, TrainCarriage.class);
+    if (ObjectUtil.isNull(trainCarriage.getId())) {
+        // 保存之前，先校验唯一键是否存在
+        TrainCarriage trainCarriageDB = selectByUnique(req.getTrainCode(), req.getIndex());
+        if (ObjectUtil.isNotEmpty(trainCarriageDB)) {
+            throw new BusinessException(BusinessExceptionEnum.BUSINESS_TRAIN_CARRIAGE_INDEX_UNIQUE_ERROR);
+        }
+        trainCarriage.setId(SnowUtil.getSnowflakeNextId());
+        trainCarriage.setCreateTime(now);
+        trainCarriage.setUpdateTime(now);
+        trainCarriageMapper.insert(trainCarriage);
+    } else {
+        trainCarriage.setUpdateTime(now);
+        trainCarriageMapper.updateByPrimaryKey(trainCarriage);
+    }
 }
-}
+
+    private TrainCarriage selectByUnique(String trainCode, Integer index) {
+        TrainCarriageExample trainCarriageExample = new TrainCarriageExample();
+        trainCarriageExample.createCriteria()
+                .andTrainCodeEqualTo(trainCode)
+                .andIndexEqualTo(index);
+        List<TrainCarriage> list = trainCarriageMapper.selectByExample(trainCarriageExample);
+        if (CollUtil.isNotEmpty(list)) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public List<TrainCarriage> selectByTrainCode(String trainCode) {
         TrainCarriageExample trainCarriageExample = new TrainCarriageExample();
         trainCarriageExample.setOrderByClause("'index' asc");

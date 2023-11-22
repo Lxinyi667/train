@@ -23,20 +23,20 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import router from '@/router';
+import { ref, watch } from 'vue'
+import router from '@/router'
 
-const selectedKeys = ref([]);
+const selectedKeys = ref([])
 
 watch(
   () => router.currentRoute.value.path,
   (newValue) => {
-    console.log('watch', newValue);
-    selectedKeys.value = [];
-    selectedKeys.value.push(newValue);
+    console.log('watch', newValue)
+    selectedKeys.value = []
+    selectedKeys.value.push(newValue)
   },
   { immediate: true }
-);
+)
 </script>
 
 <style scoped>

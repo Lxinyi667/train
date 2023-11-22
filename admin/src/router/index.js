@@ -5,15 +5,20 @@ const routes = [{
   component: () => import('../views/main.vue'),
   children: [{
     path: 'welcome',
-    component: () => import('../views/main/welcome.vue'),
+    component: () => import('../views/main/welcome.vue')
   }, {
     path: 'about',
-    component: () => import('../views/main/about.vue'),
-  }]
+    component: () => import('../views/main/about.vue')
+  }, {
+    path: 'station',
+    component: () => import('../views/main/station.vue')
+  }
+
+  ]
 }, {
   path: '',
   redirect: '/welcome'
-}];
+}]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

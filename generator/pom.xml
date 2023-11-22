@@ -35,6 +35,7 @@
             <artifactId>jaxen</artifactId>
             <version>1.2.0</version>
         </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -44,12 +45,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <dependency>
-            <groupId>top.lxyi</groupId>
-            <artifactId>member</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>top.lxyi</groupId>-->
+<!--            <artifactId>member</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -60,7 +62,8 @@
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.4.2</version>
                 <configuration>
-                    <configurationFile>src/main/resources/generator-config-member.xml</configurationFile>
+                    <!--<configurationFile>src/main/resources/generator-config-member.xml</configurationFile>-->
+                    <configurationFile>src/main/resources/generator-config-business.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>
@@ -71,7 +74,6 @@
                         <version>8.0.33</version>
                     </dependency>
                 </dependencies>
-
             </plugin>
         </plugins>
     </build>

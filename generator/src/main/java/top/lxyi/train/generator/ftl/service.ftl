@@ -5,10 +5,10 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import top.lxyi.train.common.context.LoginMemberContext;
+<#--import top.lxyi.train.common.context.LoginMemberContext;-->
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
-iimport top.lxyi.train.${module}.domain.${Domain};
+import top.lxyi.train.${module}.domain.${Domain};
 import top.lxyi.train.${module}.domain.${Domain}Example;
 import top.lxyi.train.${module}.mapper.${Domain}Mapper;
 import top.lxyi.train.${module}.req.${Domain}QueryReq;
@@ -33,7 +33,7 @@ public void save(${Domain}SaveReq req) {
 DateTime now = DateTime.now();
 ${Domain} ${domain} = BeanUtil.copyProperties(req, ${Domain}.class);
 if (ObjectUtil.isNull(${domain}.getId())) {
-${domain}.setMemberId(LoginMemberContext.getId());
+<#--        ${domain}.setMemberId(LoginMemberContext.getId());-->
 ${domain}.setId(SnowUtil.getSnowflakeNextId());
 ${domain}.setCreateTime(now);
 ${domain}.setUpdateTime(now);
@@ -48,9 +48,9 @@ public PageResp<${Domain}QueryResp> queryList(${Domain}QueryReq req) {
     ${Domain}Example ${domain}Example = new ${Domain}Example();
     ${domain}Example.setOrderByClause("id desc");
     ${Domain}Example.Criteria criteria = ${domain}Example.createCriteria();
-    if (ObjectUtil.isNotNull(req.getMemberId())) {
-    criteria.andMemberIdEqualTo(req.getMemberId());
-    }
+    <#--        if (ObjectUtil.isNotNull(req.getMemberId())) {-->
+    <#--        criteria.andMemberIdEqualTo(req.getMemberId());-->
+    <#--        }-->
 
     LOG.info("查询页码：{}", req.getPage());
     LOG.info("每页条数：{}", req.getSize());

@@ -17,21 +17,27 @@
           关于
         </router-link>
       </a-menu-item>
+        <a-menu-item key="/station">
+        <router-link to="/station">
+          <home-outlined/>
+          车站管理
+        </router-link>
+      </a-menu-item>
     </a-menu>
   </a-layout-sider>
 </template>
 
 <script setup>
-import {ref, watch} from 'vue';
-import router from "@/router";
+import { ref, watch } from 'vue'
+import router from '@/router'
 
-const selectedKeys = ref([]);
+const selectedKeys = ref([])
 
 watch(() => router.currentRoute.value.path, (newValue) => {
-  console.log('watch', newValue);
-  selectedKeys.value = [];
-  selectedKeys.value.push(newValue);
-}, {immediate: true});
+  console.log('watch', newValue)
+  selectedKeys.value = []
+  selectedKeys.value.push(newValue)
+}, { immediate: true })
 </script>
 
 <style scoped>

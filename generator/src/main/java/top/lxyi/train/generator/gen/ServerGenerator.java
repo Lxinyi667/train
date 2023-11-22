@@ -18,7 +18,7 @@ public class ServerGenerator {
     static String servicePath = "[module]/src/main/java/top/lxyi/train/[module]/service/";
     static String serverPath = "[module]/src/main/java/top/lxyi/train/[module]/";
 
-    static String vuePath = "web/src/views/main/";
+    static String vuePath = "admin/src/views/main/";
     static boolean readOnly = false;
     static String pomPath = "generator/pom.xml";
 
@@ -81,12 +81,13 @@ public class ServerGenerator {
         param.put("readOnly",readOnly);
         System.out.println("组装参数：" + param);
 
-//        gen(Domain, param, "service", "service");
+        gen(Domain, param, "service", "service");
 //        gen(Domain, param, "controller", "controller");
-//        gen(Domain, param, "req", "saveReq");
-//        gen(Domain, param, "req", "saveReq");
-//        gen(Domain, param, "req", "queryReq");
-//        gen(Domain, param, "resp", "queryResp");
+        gen(Domain, param, "controller/admin", "adminController");
+        gen(Domain, param, "req", "saveReq");
+        gen(Domain, param, "req", "saveReq");
+        gen(Domain, param, "req", "queryReq");
+        gen(Domain, param, "resp", "queryResp");
         genVue(do_main,param);
     }
 

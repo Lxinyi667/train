@@ -17,6 +17,9 @@ dependencies:
   core-js:
     specifier: ^3.8.3
     version: registry.npmmirror.com/core-js@3.33.3
+  pinyin-pro:
+    specifier: ^3.13.0
+    version: registry.npmmirror.com/pinyin-pro@3.18.2
   vue:
     specifier: ^3.2.13
     version: registry.npmmirror.com/vue@3.3.8
@@ -7511,6 +7514,12 @@ packages:
     version: 2.3.1
     engines: {node: '>=8.6'}
     dev: true
+
+  registry.npmmirror.com/pinyin-pro@3.18.2:
+    resolution: {integrity: sha512-syJcc1Fc5a6mek365wRNKrU4DSYtnUZSbEHK6LN371mJXwSwTYx6Pmq5YYnkXUNihwWBdxBmfH8uCCKmQeU2VA==, tarball: https://registry.npmmirror.com/pinyin-pro/-/pinyin-pro-3.18.2.tgz}
+    name: pinyin-pro
+    version: 3.18.2
+    dev: false
 
   registry.npmmirror.com/pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==, tarball: https://registry.npmmirror.com/pkg-dir/-/pkg-dir-4.2.0.tgz}

@@ -17,6 +17,9 @@ dependencies:
   core-js:
     specifier: ^3.8.3
     version: registry.npmmirror.com/core-js@3.33.3
+  dayjs:
+    specifier: ^1.11.10
+    version: registry.npmmirror.com/dayjs@1.11.10
   pinyin-pro:
     specifier: ^3.13.0
     version: registry.npmmirror.com/pinyin-pro@3.18.2

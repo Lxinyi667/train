@@ -41,7 +41,14 @@ trainCarriage.setUpdateTime(now);
 trainCarriageMapper.updateByPrimaryKey(trainCarriage);
 }
 }
+    public List<TrainCarriage> selectByTrainCode(String trainCode) {
+        TrainCarriageExample trainCarriageExample = new TrainCarriageExample();
+        trainCarriageExample.setOrderByClause("'index' asc");
+        TrainCarriageExample.Criteria criteria = trainCarriageExample.createCriteria();
+        criteria.andTrainCodeEqualTo(trainCode);
+        return trainCarriageMapper.selectByExample(trainCarriageExample);
 
+    }
 public PageResp<TrainCarriageQueryResp> queryList(TrainCarriageQueryReq req) {
     TrainCarriageExample trainCarriageExample = new TrainCarriageExample();
     trainCarriageExample.setOrderByClause("train_code asc,'index' asc");

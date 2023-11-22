@@ -136,6 +136,19 @@ const onAdd = () => {
   trainStation.value = {}
   visible.value = true
 }
+watch(
+  () => trainStation.value.name,
+  () => {
+    if (Tool.isNotEmpty(trainStation.value.name)) {
+      trainStation.value.namePinyin = pinyin(trainStation.value.name, {
+        toneType: 'none'
+      }).replaceAll(' ', ' ')
+    } else {
+      trainStation.value.namePinyin = ''
+    }
+  },
+  { immediate: true }
+)
 
 const onEdit = (record) => {
   trainStation.value = window.Tool.copy(record)

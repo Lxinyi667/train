@@ -41,6 +41,12 @@
           火车车厢
         </router-link>
       </a-menu-item>
+      <a-menu-item key="/train-seat">
+        <router-link to="/train-seat">
+          <car-outlined/>
+          火车座位
+        </router-link>
+      </a-menu-item>
     </a-menu>
   </a-layout-sider>
 </template>

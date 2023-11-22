@@ -8,6 +8,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import top.lxyi.train.business.domain.TrainStation;
 import top.lxyi.train.business.domain.TrainStationExample;
+import top.lxyi.train.business.enums.SeatColEnum;
 import top.lxyi.train.common.exception.BusinessException;
 import top.lxyi.train.common.exception.BusinessExceptionEnum;
 import top.lxyi.train.common.resp.PageResp;
@@ -35,6 +36,10 @@ private TrainCarriageMapper trainCarriageMapper;
 
 public void save(TrainCarriageSaveReq req) {
     DateTime now = DateTime.now();
+    //自动计算出列数和总座位数
+    List<SeatColEnum> seatColEnums = SeatColEnum.getColsByType(req.getSeatType());
+    req.setColCount(seatColEnums.size());
+    req.setSeatCount(req.getColCount() * req.getRowCount());
 
     TrainCarriage trainCarriage = BeanUtil.copyProperties(req, TrainCarriage.class);
     if (ObjectUtil.isNull(trainCarriage.getId())) {

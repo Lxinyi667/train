@@ -17,10 +17,16 @@
           关于
         </router-link>
       </a-menu-item>
-        <a-menu-item key="/station">
+      <a-menu-item key="/station">
         <router-link to="/station">
           <home-outlined/>
           车站管理
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="/train">
+        <router-link to="/train">
+          <home-outlined/>
+          火车管理
         </router-link>
       </a-menu-item>
     </a-menu>

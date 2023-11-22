@@ -15,4 +15,4 @@ mybatis:
 
 logging:
   level:
-    top.mqxu.train.member.mapper: trace
+    top.lxyi.train.member.mapper: trace

@@ -9,6 +9,11 @@ spring:
         uri: http://127.0.0.1:8001
         predicates:
           - Path=/member/**
+      routes[1]:
+        id: business
+        uri: http://127.0.0.1:8002
+        predicates:
+          - Path=/business/**
       globalcors:
         cors-configurations:
           '[/**]':

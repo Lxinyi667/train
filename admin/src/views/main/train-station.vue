@@ -34,14 +34,18 @@
                                 <a-input v-model:value="trainStation.index"/>
                         </a-form-item>
                         <a-form-item label="站名">
-                                <a-input v-model:value="trainStation.name"/>
+                          <station-select-view
+                            v-model="trainStation.name"
+                            width="200px">
+                          </station-select-view>
                         </a-form-item>
                         <a-form-item label="站名拼音">
                                 <a-input v-model:value="trainStation.namePinyin"/>
                         </a-form-item>
                         <a-form-item label="进站时间">
-                                    <a-time-picker v-model:value="trainStation.inTime" valueFormat="HH:mm:ss"
-                                                   placeholder="请选择时间"/>
+                            <a-time-picker v-model:value="trainStation.inTime"
+                            valueFormat="HH:mm:ss"
+                            placeholder="请选择时间"/>
                         </a-form-item>
                         <a-form-item label="出站时间">
                                     <a-time-picker v-model:value="trainStation.outTime" valueFormat="HH:mm:ss"
@@ -64,6 +68,7 @@ import { notification } from 'ant-design-vue'
 import axios from 'axios'
 import { pinyin } from 'pinyin-pro'
 import TrainSelectView from '@/components/train-select.vue'
+import StationSelectView from '@/components/station-select.vue'
 
 const visible = ref(false)
 const trainStation = ref({

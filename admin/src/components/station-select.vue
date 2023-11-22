@@ -1,20 +1,20 @@
 <template>
     <a-select
-        v-model:value="trainCode"
+        v-model:value="name"
         show-search
         allowClear
-        :filterOption="filterTrainCodeOption"
+        :filterOption="filterNameOption"
         @change="onChange"
-        placeholder="请选择车次"
+        placeholder="请选择车站"
         :style="'width:' + _width"
     >
    <a-select-option
-         v-for="item in trains"
-        :key="item.code"
-        :value="item.code"
-        :label="item.code + item.start + item.end"
+         v-for="item in stations"
+        :key="item.name"
+        :value="item.name"
+        :label="item.name + item.namePinyin + item.namePy"
     >
-        {{item.code }} | {{item.start }} ~ {{item.end }}
+        {{item.name }} | {{item.namePinyin }} ~ {{item.namePy }}
     </a-select-option>
     </a-select>
 </template>
@@ -37,8 +37,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'change'])
 
-const trainCode = ref()
-const trains = ref([])
+const name = ref()
+const stations = ref([])
 
 const _width = ref(props.width)
 if (Tool.isEmpty(props.width)) {
@@ -50,36 +50,36 @@ watch(
   () => props.modelValue,
   () => {
     console.log('props.modelValue', props.modelValue)
-    trainCode.value = props.modelValue
+    name.value = props.modelValue
   },
   { immediate: true }
 )
 /**
  * 查询所有的车次，用于车次下拉框
  */
-const queryAllTrain = () => {
-  axios.get('/business/admin/train/query-all').then((response) => {
+const queryAllStation = () => {
+  axios.get('/business/admin/station/query-all').then((response) => {
     const data = response.data
     if (data.success) {
-      trains.value = data.content
+      stations.value = data.content
     } else {
       notification.error({ description: data.message })
     }
   })
 }
-const filterTrainCodeOption = (input, option) => {
+const filterNameOption = (input, option) => {
   console.log(input, option)
   return option.label.toLowerCcase().indexOf(input.toLowerCase()) >= 0
 }
 const onChange = (value) => {
   emit('update:modelValue', value)
-  let train = trains.value.filter((item) = item.code === value)[0]
-  if (Tool.isEmpty(train)) {
+  let train = stations.value.filter((item) = item.code === value)[0]
+  if (Tool.isEmpty(station)) {
     train = {}
   }
-  emit('change', train)
+  emit('change', station)
 }
 onMounted(() => {
-  queryAllTrain()
+  queryAllStation()
 })
 </script>

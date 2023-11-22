@@ -29,19 +29,25 @@ private static final Logger LOG = LoggerFactory.getLogger(StationService.class);
 private StationMapper stationMapper;
 
 public void save(StationSaveReq req) {
-DateTime now = DateTime.now();
-Station station = BeanUtil.copyProperties(req, Station.class);
-if (ObjectUtil.isNull(station.getId())) {
-station.setId(SnowUtil.getSnowflakeNextId());
-station.setCreateTime(now);
-station.setUpdateTime(now);
-stationMapper.insert(station);
-} else {
-station.setUpdateTime(now);
-stationMapper.updateByPrimaryKey(station);
+    DateTime now = DateTime.now();
+    Station station = BeanUtil.copyProperties(req, Station.class);
+    if (ObjectUtil.isNull(station.getId())) {
+        station.setId(SnowUtil.getSnowflakeNextId());
+        station.setCreateTime(now);
+        station.setUpdateTime(now);
+        stationMapper.insert(station);
+    } else {
+        station.setUpdateTime(now);
+        stationMapper.updateByPrimaryKey(station);
+    }
 }
-}
-
+    public List<StationQueryResp> queryAll() {
+        StationExample stationExample = new StationExample();
+        //根据站名拼音升序排列
+        stationExample.setOrderByClause("name_pinyin asc");
+        List<Station> stationList = stationMapper.selectByExample(stationExample);
+        return BeanUtil.copyToList(stationList, StationQueryResp.class);
+    }
 public PageResp<StationQueryResp> queryList(StationQueryReq req) {
     StationExample stationExample = new StationExample();
     stationExample.setOrderByClause("id desc");
@@ -63,7 +69,6 @@ public PageResp<StationQueryResp> queryList(StationQueryReq req) {
             pageResp.setList(list);
             return pageResp;
             }
-
             public void delete(Long id) {
             stationMapper.deleteByPrimaryKey(id);
             }

@@ -69,13 +69,13 @@ const queryAllStation = () => {
 }
 const filterNameOption = (input, option) => {
   console.log(input, option)
-  return option.label.toLowerCcase().indexOf(input.toLowerCase()) >= 0
+  return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 }
 const onChange = (value) => {
   emit('update:modelValue', value)
-  let train = stations.value.filter((item) = item.code === value)[0]
+  let station = stations.value.filter((item) => item.code === value)[0]
   if (Tool.isEmpty(station)) {
-    train = {}
+    station = {}
   }
   emit('change', station)
 }

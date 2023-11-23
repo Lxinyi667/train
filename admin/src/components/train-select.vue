@@ -69,11 +69,11 @@ const queryAllTrain = () => {
 }
 const filterTrainCodeOption = (input, option) => {
   console.log(input, option)
-  return option.label.toLowerCcase().indexOf(input.toLowerCase()) >= 0
+  return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 }
 const onChange = (value) => {
   emit('update:modelValue', value)
-  let train = trains.value.filter((item) = item.code === value)[0]
+  let train = trains.value.filter((item) => item.code === value)[0]
   if (Tool.isEmpty(train)) {
     train = {}
   }

@@ -14,6 +14,11 @@ spring:
         uri: http://127.0.0.1:8002
         predicates:
           - Path=/business/**
+      routes[2]:
+        id: batch
+        uri: http://127.0.0.1:8003
+        predicates:
+          - Path=/batch/**
       globalcors:
         cors-configurations:
           '[/**]':

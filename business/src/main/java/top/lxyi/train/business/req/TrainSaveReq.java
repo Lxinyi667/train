@@ -40,9 +40,8 @@ public class TrainSaveReq {
     /**
     * 出发时间
     */
-            @JsonFormat(pattern = " HH:mm:ss ",timezone = "GMT+8")
-
-                @NotNull(message = "【出发时间】不能为空")
+    @JsonFormat(pattern = "HH:mm:ss",timezone = "GMT+8")
+    @NotNull(message = "【出发时间】不能为空")
     private Date startTime;
 
     /**
@@ -60,9 +59,8 @@ public class TrainSaveReq {
     /**
     * 到站时间
     */
-            @JsonFormat(pattern = " HH:mm:ss ",timezone = "GMT+8")
-
-                @NotNull(message = "【到站时间】不能为空")
+    @JsonFormat(pattern = "HH:mm:ss",timezone = "GMT+8")
+    @NotNull(message = "【到站时间】不能为空")
     private Date endTime;
 
     /**

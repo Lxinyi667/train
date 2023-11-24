@@ -6,17 +6,20 @@ spring:
     gateway:
       routes[0]:
         id: member
-        uri: http://127.0.0.1:8001
+#        uri: http://127.0.0.1:8001
+        uri: lb://member
         predicates:
           - Path=/member/**
       routes[1]:
         id: business
-        uri: http://127.0.0.1:8002
+#        uri: http://127.0.0.1:8002
+        uri: lb://business
         predicates:
           - Path=/business/**
       routes[2]:
         id: batch
-        uri: http://127.0.0.1:8003
+#        uri: http://127.0.0.1:8003
+        uri: lb://batch
         predicates:
           - Path=/batch/**
       globalcors:

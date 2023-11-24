@@ -40,7 +40,8 @@
         <javaClientGenerator targetProject="../business/src/main/java"
                              targetPackage="top.lxyi.train.business.mapper"
                              type="XMLMAPPER"/>
-        <table tableName="train_seat" domainObjectName="TrainSeat"/>
+<!--        <table tableName="train_seat" domainObjectName="TrainSeat"/>-->
+        <table tableName="daily_train" domainObjectName="DailyTrain"/>
 <!--        <table tableName="train_carriage" domainObjectName="TrainCarriage"/>-->
     </context>
 </generatorConfiguration>

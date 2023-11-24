@@ -25,6 +25,20 @@
           </router-link>
         </a-menu-item>
       </a-sub-menu>
+
+      <a-sub-menu key="batch">
+        <template #title>
+          <span>
+            <UnorderedListOutlined />
+            业务管理
+          </span>
+        </template>
+        <a-menu-item key="/batch/job">
+          <router-link to="/batch/job">
+            <MenuUnfoldOutlined /> 每日车次
+          </router-link>
+        </a-menu-item>
+      </a-sub-menu>
       <a-sub-menu key="base">
         <template #title>
           <span>

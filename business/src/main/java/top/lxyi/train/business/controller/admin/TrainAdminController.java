@@ -39,11 +39,11 @@ public class TrainAdminController {
         List<TrainQueryResp> list = trainService.queryAll();
         return new CommonResp<>(list);
     }
-    @GetMapping("/gen-seat/{trainCode}")
-    public CommonResp<Object> genSeat(@PathVariable String trainCode) {
-        trainSeatService.genTrainSeat(trainCode);
-        return new CommonResp<>();
-    }
+//    @GetMapping("/gen-seat/{trainCode}")
+//    public CommonResp<Object> genSeat(@PathVariable String trainCode) {
+//        trainSeatService.genTrainSeat(trainCode);
+//        return new CommonResp<>();
+//    }
     @DeleteMapping("/delete/{id}")
     public CommonResp<Object> delete(@PathVariable Long id) {
         trainService.delete(id);

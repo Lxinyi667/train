@@ -3,10 +3,10 @@ package top.lxyi.train.business.req;
 
 import top.lxyi.train.common.req.PageReq;
 
-public class TrainSeatQueryReq extends PageReq {
+public class DailyTrainQueryReq extends PageReq {
 @Override
 public String toString() {
-return "TrainSeatQueryReq{" +
+return "DailyTrainQueryReq{" +
 "} " + super.toString();
 }
 }

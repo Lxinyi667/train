@@ -35,6 +35,8 @@ public class DailyTrainService {
     private TrainService trainService;
     @Resource
     private DailyTrainStationService dailyTrainStationService;
+    @Resource
+    private DailyTrainCarriageService dailyTrainCarriageService;
 
     public void save(DailyTrainSaveReq req) {
         DateTime now = DateTime.now();
@@ -92,24 +94,31 @@ public class DailyTrainService {
     }
 
     private void genDailyTrain(Date date, Train train) {
-        //删除该车次已有的数据
+        //1.删除该车次已有的数据
         DailyTrainExample dailyTrainExample = new DailyTrainExample();
         dailyTrainExample.createCriteria()
                 .andDateEqualTo(date)
                 .andCodeEqualTo(train.getCode());
         dailyTrainMapper.deleteByExample(dailyTrainExample);
 
-        //生成该车次的数据
+        //2.生成该车次的数据
         DateTime now = DateTime.now();
+        //属性拷贝
         DailyTrain dailyTrain = BeanUtil.copyProperties(train , DailyTrain.class);
+        //补全或修改其他属性
         dailyTrain.setId(SnowUtil.getSnowflakeNextId());
         dailyTrain.setCreateTime(now);
         dailyTrain.setUpdateTime(now);
         dailyTrain.setDate(date);
         dailyTrainMapper.insert(dailyTrain);
+
         //生成改车次的车站数据
         dailyTrainStationService.genDaily(date,train.getCode());
-        LOG.info("生成日期【{}】车次【{}】的信息结束", DateUtil.formatDate(date),train.getCode());
+        LOG.info("生成日期【{}】车次【{}】的车站信息结束", DateUtil.formatDate(date),train.getCode());
+
+        //生成每日车厢数据
+        dailyTrainCarriageService.genDaily(date,train.getCode());
+        LOG.info("生成日期【{}】车次【{}】的车厢信息结束", DateUtil.formatDate(date),train.getCode());
     }
 
 

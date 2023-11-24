@@ -65,6 +65,8 @@ public class DailyTrainCarriageExample {
         distinct = false;
     }
 
+
+
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
 

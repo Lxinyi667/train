@@ -2,7 +2,7 @@
     <p>
         <a-space>
             <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"/>
-            <train-select-view v-model="params.code" width="200px" />
+            <train-select-view v-model:value="params.code" width="200px" />
             <a-button type="primary" @click="handleQuery()">查询</a-button>
             <a-button type="primary" @click="onAdd">新增</a-button>
         </a-space>
@@ -34,7 +34,7 @@
                                                    placeholder="请选择日期"/>
                         </a-form-item>
                         <a-form-item label="车次编号">
-                          <train-select-view v-model="dailyTrainStation.trainCode"></train-select-view>
+                          <train-select-view v-model="dailyTrainStation.trainCode"  @change="onChangeCode"></train-select-view>
                         </a-form-item>
                         <a-form-item label="站序">
                                 <a-input v-model:value="dailyTrainStation.index"/>
@@ -184,7 +184,10 @@ const handleOk = () => {
     }
   })
 }
-
+const params = ref({
+  trainCode: null,
+  date: null
+})
 const handleQuery = (param) => {
   if (!param) {
     param = {
@@ -218,7 +221,12 @@ const handleTableChange = (pagination) => {
     size: pagination.pageSize
   })
 }
-
+const onChangeCode = (train) => {
+  console.log('车次下拉框组件选择：', train)
+  const t = Tool.copy(train)
+  delete t.id
+  dailyTrainStation.value = Object.assign(dailyTrainStation.value, t)
+}
 onMounted(() => {
   handleQuery({
     page: 1,

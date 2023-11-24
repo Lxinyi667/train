@@ -44,7 +44,7 @@ dailyTrainStationMapper.updateByPrimaryKey(dailyTrainStation);
 
 public PageResp<DailyTrainStationQueryResp> queryList(DailyTrainStationQueryReq req) {
     DailyTrainStationExample dailyTrainStationExample = new DailyTrainStationExample();
-    dailyTrainStationExample.setOrderByClause("data desc,trainCode asc");
+    dailyTrainStationExample.setOrderByClause("date desc,train_code asc");
     DailyTrainStationExample.Criteria criteria = dailyTrainStationExample.createCriteria();
     if (ObjectUtil.isNotNull(req.getDate())){
         criteria.andDateEqualTo(req.getDate());

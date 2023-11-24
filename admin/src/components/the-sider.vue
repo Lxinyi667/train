@@ -43,7 +43,13 @@
             <MenuUnfoldOutlined /> 每日车站
           </router-link>
         </a-menu-item>
+        <a-menu-item key="/business/daily_train_seat">
+          <router-link to="/business/daily_train_seat">
+            <MenuUnfoldOutlined /> 每日座位
+          </router-link>
+        </a-menu-item>
       </a-sub-menu>
+
       <a-sub-menu key="base">
         <template #title>
           <span>

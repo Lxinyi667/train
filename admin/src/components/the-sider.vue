@@ -33,13 +33,13 @@
             业务管理
           </span>
         </template>
-        <a-menu-item key="/batch/job">
-          <router-link to="/batch/job">
+        <a-menu-item key="/business/daily-train">
+          <router-link to="/business/daily-train">
             <MenuUnfoldOutlined /> 每日车次
           </router-link>
         </a-menu-item>
       </a-sub-menu>
-      <a-sub-menu key="base">
+      <a-sub-menu key="business">
         <template #title>
           <span>
             <UnorderedListOutlined />

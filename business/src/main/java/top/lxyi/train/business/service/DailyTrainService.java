@@ -44,8 +44,13 @@ dailyTrainMapper.updateByPrimaryKey(dailyTrain);
 
 public PageResp<DailyTrainQueryResp> queryList(DailyTrainQueryReq req) {
     DailyTrainExample dailyTrainExample = new DailyTrainExample();
-    dailyTrainExample.setOrderByClause("id desc");
+    dailyTrainExample.setOrderByClause("data desc,code asc");
     DailyTrainExample.Criteria criteria = dailyTrainExample.createCriteria();
+    if (ObjectUtil.isNotNull(req.getData())){
+        criteria.andDateEqualTo(req.getData());
+    }if (ObjectUtil.isNotEmpty(req.getCode())){
+        criteria.andCodeEqualTo(req.getCode());
+    }
 
     LOG.info("查询页码：{}", req.getPage());
     LOG.info("每页条数：{}", req.getSize());

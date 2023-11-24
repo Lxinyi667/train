@@ -1,8 +1,10 @@
 <template>
     <p>
         <a-space>
-            <a-button type="primary" @click="handleQuery()">刷新</a-button>
-                            <a-button type="primary" @click="onAdd">新增</a-button>
+            <a-date-picker v-model:value="params.data" valueFormat="YYYY-MM-DD" placeholder="请选择日期"/>
+            <train-select-view v-model="params.code" width="200px"/>
+            <a-button type="primary" @click="handleQuery()">查询</a-button>
+            <a-button type="primary" @click="onAdd">新增</a-button>
         </a-space>
     </p>
     <a-table :dataSource="dailyTrains"
@@ -194,7 +196,10 @@ const handleOk = () => {
     }
   })
 }
-
+const params = ref({
+  code: null,
+  date: null
+})
 const handleQuery = (param) => {
   if (!param) {
     param = {
@@ -206,7 +211,9 @@ const handleQuery = (param) => {
   axios.get('/business/admin/daily-train/query-list', {
     params: {
       page: param.page,
-      size: param.size
+      size: param.size,
+      code: param.value.code,
+      date: param.value.date
     }
   }).then((response) => {
     loading.value = false
@@ -227,6 +234,12 @@ const handleTableChange = (pagination) => {
     page: pagination.current,
     size: pagination.pageSize
   })
+}
+const onChangeCode = (train) => {
+  console.Log('车次下拉框组件选择：', train)
+  const t = Tool.copy(train)
+  delete t.id
+  dailyTrain.value = Object.assign(dailyTrain.value, t)
 }
 
 onMounted(() => {

@@ -23,25 +23,31 @@ import java.util.List;
 @Service
 public class TrainSeatService {
 
-private static final Logger LOG = LoggerFactory.getLogger(TrainSeatService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TrainSeatService.class);
 
-@Resource
-private TrainSeatMapper trainSeatMapper;
+    @Resource
+    private TrainSeatMapper trainSeatMapper;
 
-public void save(TrainSeatSaveReq req) {
-DateTime now = DateTime.now();
-TrainSeat trainSeat = BeanUtil.copyProperties(req, TrainSeat.class);
-if (ObjectUtil.isNull(trainSeat.getId())) {
-trainSeat.setId(SnowUtil.getSnowflakeNextId());
-trainSeat.setCreateTime(now);
-trainSeat.setUpdateTime(now);
-trainSeatMapper.insert(trainSeat);
-} else {
-trainSeat.setUpdateTime(now);
-trainSeatMapper.updateByPrimaryKey(trainSeat);
+    public void save(TrainSeatSaveReq req) {
+        DateTime now = DateTime.now();
+        TrainSeat trainSeat = BeanUtil.copyProperties(req, TrainSeat.class);
+        if (ObjectUtil.isNull(trainSeat.getId())) {
+            trainSeat.setId(SnowUtil.getSnowflakeNextId());
+            trainSeat.setCreateTime(now);
+            trainSeat.setUpdateTime(now);
+            trainSeatMapper.insert(trainSeat);
+        } else {
+            trainSeat.setUpdateTime(now);
+            trainSeatMapper.updateByPrimaryKey(trainSeat);
+        }
+    }
+    //添加方法，按车次编号查询所有座位
+public List<TrainSeat> selectByTrainCode(String trainCode){
+    TrainSeatExample trainSeatExample = new TrainSeatExample();
+    trainSeatExample.setOrderByClause("'id' asc");
+    trainSeatExample.createCriteria().andTrainCodeEqualTo(trainCode);
+    return trainSeatMapper.selectByExample(trainSeatExample);
 }
-}
-
 public PageResp<TrainSeatQueryResp> queryList(TrainSeatQueryReq req) {
     TrainSeatExample trainSeatExample = new TrainSeatExample();
     trainSeatExample.setOrderByClause("id desc");

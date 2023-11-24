@@ -26,7 +26,7 @@
         </a-menu-item>
       </a-sub-menu>
 
-      <a-sub-menu key="batch">
+      <a-sub-menu key="business">
         <template #title>
           <span>
             <UnorderedListOutlined />
@@ -38,8 +38,13 @@
             <MenuUnfoldOutlined /> 每日车次
           </router-link>
         </a-menu-item>
+        <a-menu-item key="/business/daily_train_station">
+          <router-link to="/business/daily_train_station">
+            <MenuUnfoldOutlined /> 每日车站
+          </router-link>
+        </a-menu-item>
       </a-sub-menu>
-      <a-sub-menu key="business">
+      <a-sub-menu key="base">
         <template #title>
           <span>
             <UnorderedListOutlined />

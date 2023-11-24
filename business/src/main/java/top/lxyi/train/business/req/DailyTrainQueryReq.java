@@ -10,7 +10,7 @@ import java.util.Date;
 public class DailyTrainQueryReq extends PageReq {
      private String code;
      @DateTimeFormat(pattern = "yyyy-MM-dd")
-     private Date data;
+     private Date date;
 
     public String getCode() {
         return code;
@@ -20,12 +20,12 @@ public class DailyTrainQueryReq extends PageReq {
         this.code = code;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDate() {
+        return date;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override

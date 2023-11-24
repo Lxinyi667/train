@@ -41,7 +41,9 @@
                              targetPackage="top.lxyi.train.business.mapper"
                              type="XMLMAPPER"/>
 <!--        <table tableName="train_seat" domainObjectName="TrainSeat"/>-->
-        <table tableName="daily_train" domainObjectName="DailyTrain"/>
+<!--        <table tableName="daily_train" domainObjectName="DailyTrain"/>-->
+        <table tableName="daily_train_station" domainObjectName="DailyTrainStation"/>
+
 <!--        <table tableName="train_carriage" domainObjectName="TrainCarriage"/>-->
     </context>
 </generatorConfiguration>

@@ -78,6 +78,12 @@ public void save(TrainStationSaveReq req) {
             return null;
         }
     }
+    public List<TrainStation> selectByTrainCode(String trainCode) {
+        TrainStationExample trainStationExample =new TrainStationExample();
+        trainStationExample.setOrderByClause("'index' asc");
+        trainStationExample.createCriteria().andTrainCodeEqualTo(trainCode);
+        return trainStationMapper.selectByExample(trainStationExample);
+    }
 public PageResp<TrainStationQueryResp> queryList(TrainStationQueryReq req) {
     TrainStationExample trainStationExample = new TrainStationExample();
     //按数据库的 train_code 字段升序排列查询

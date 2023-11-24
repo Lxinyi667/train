@@ -1,25 +1,16 @@
 package top.lxyi.train.business.req;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.format.annotation.DateTimeFormat;
 import top.lxyi.train.common.req.PageReq;
 
 import java.util.Date;
 
-public class DailyTrainQueryReq extends PageReq {
-     private String code;
+public class DailyTrainCarriageQueryReq extends PageReq {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-     private Date date;
+    private Date date;
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
+    private String trainCode;
 
     public Date getDate() {
         return date;
@@ -29,9 +20,17 @@ public class DailyTrainQueryReq extends PageReq {
         this.date = date;
     }
 
+    public String getTrainCode() {
+        return trainCode;
+    }
+
+    public void setTrainCode(String trainCode) {
+        this.trainCode = trainCode;
+    }
+
     @Override
     public String toString() {
-        return "DailyTrainQueryReq{" +
+        return "DailyTrainCarriageQueryReq{" +
         "} " + super.toString();
     }
 }

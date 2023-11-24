@@ -7,7 +7,7 @@
             <a-button type="primary" @click="onAdd">新增</a-button>
         </a-space>
     </p>
-    <a-table :dataSource="dailyTrainSeats"
+    <a-table :dataSource="dailyTrainCarriages"
              :columns="columns"
              :pagination="pagination"
              @change="handleTableChange"
@@ -24,13 +24,6 @@
                         <a @click="onEdit(record)">编辑</a>
                     </a-space>
             </template>
-                    <template v-else-if="column.dataIndex === 'col'">
-        <span v-for="item in SEAT_COL_ARRAY" :key="item.code">
-          <span v-if="item.code === record.col">
-            {{item.desc}}
-          </span>
-        </span>
-                    </template>
                     <template v-else-if="column.dataIndex === 'seatType'">
         <span v-for="item in SEAT_TYPE_ARRAY" :key="item.code">
           <span v-if="item.code === record.seatType">
@@ -40,44 +33,36 @@
                     </template>
         </template>
     </a-table>
-        <a-modal v-model:visible="visible" title="每日座位" @ok="handleOk"
+        <a-modal v-model:visible="visible" title="每日车厢" @ok="handleOk"
                  ok-text="确认" cancel-text="取消">
-            <a-form :model="dailyTrainSeat" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
+            <a-form :model="dailyTrainCarriage" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
                         <a-form-item label="日期">
-                                    <a-date-picker v-model:value="dailyTrainSeat.date" valueFormat="YYYY-MM-DD"
+                                    <a-date-picker v-model:value="dailyTrainCarriage.date" valueFormat="YYYY-MM-DD"
                                                    placeholder="请选择日期"/>
                         </a-form-item>
                         <a-form-item label="车次编号">
-                          <train-select-view v-model="dailyTrainSeat.trainCode"  @change="onChangeCode"></train-select-view>
+                          <train-select-view v-model="dailyTrainCarriage.trainCode"  @change="onChangeCode"></train-select-view>
                         </a-form-item>
                         <a-form-item label="厢序">
-                                <a-input v-model:value="dailyTrainSeat.carriageIndex"/>
-                        </a-form-item>
-                        <a-form-item label="排号">
-                                <a-input v-model:value="dailyTrainSeat.row"/>
-                        </a-form-item>
-                        <a-form-item label="列号">
-                                <a-select v-model:value="dailyTrainSeat.col">
-                                    <a-select-option v-for="item in SEAT_COL_ARRAY" :key="item.code"
-                                                     :value="item.code">
-                                        {{item.desc}}
-                                    </a-select-option>
-                                </a-select>
+                                <a-input v-model:value="dailyTrainCarriage.index"/>
                         </a-form-item>
                         <a-form-item label="座位类型">
-                                <a-select v-model:value="dailyTrainSeat.seatType">
+                                <a-select v-model:value="dailyTrainCarriage.seatType">
                                     <a-select-option v-for="item in SEAT_TYPE_ARRAY" :key="item.code"
                                                      :value="item.code">
                                         {{item.desc}}
                                     </a-select-option>
                                 </a-select>
                         </a-form-item>
-                        <a-form-item label="同车厢座序">
-                                <a-input v-model:value="dailyTrainSeat.carriageSeatIndex"/>
-                        </a-form-item>
-                        <a-form-item label="售卖情况">
-                                <a-input v-model:value="dailyTrainSeat.sell"/>
-                        </a-form-item>
+<!--      <a-form-item label="座位数">-->
+<!--        <a-input v-model:value="dailyTrainCarriage.seatCount"/>-->
+<!--      </a-form-item>-->
+      <a-form-item label="排数">
+        <a-input v-model:value="dailyTrainCarriage.rowCount"/>
+      </a-form-item>
+<!--      <a-form-item label="列数">-->
+<!--        <a-input v-model:value="dailyTrainCarriage.colCount"/>-->
+<!--      </a-form-item>-->
             </a-form>
         </a-modal>
 </template>
@@ -87,23 +72,21 @@ import { ref, onMounted } from 'vue'
 import { notification } from 'ant-design-vue'
 import axios from 'axios'
 import TrainSelectView from '@/components/train-select.vue'
-const SEAT_COL_ARRAY = window.SEAT_COL_ARRAY
 const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY
 const visible = ref(false)
-const dailyTrainSeat = ref({
+const dailyTrainCarriage = ref({
   id: undefined,
   date: undefined,
   trainCode: undefined,
-  carriageIndex: undefined,
-  row: undefined,
-  col: undefined,
+  index: undefined,
   seatType: undefined,
-  carriageSeatIndex: undefined,
-  sell: undefined,
+  seatCount: undefined,
+  rowCount: undefined,
+  colCount: undefined,
   createTime: undefined,
   updateTime: undefined
 })
-const dailyTrainSeats = ref([])
+const dailyTrainCarriages = ref([])
 // 分页的三个属性名是固定的
 const pagination = ref({
   total: 0,
@@ -124,18 +107,8 @@ const columns = [
   },
   {
     title: '厢序',
-    dataIndex: 'carriageIndex',
-    key: 'carriageIndex'
-  },
-  {
-    title: '排号',
-    dataIndex: 'row',
-    key: 'row'
-  },
-  {
-    title: '列号',
-    dataIndex: 'col',
-    key: 'col'
+    dataIndex: 'index',
+    key: 'index'
   },
   {
     title: '座位类型',
@@ -143,14 +116,19 @@ const columns = [
     key: 'seatType'
   },
   {
-    title: '同车厢座序',
-    dataIndex: 'carriageSeatIndex',
-    key: 'carriageSeatIndex'
+    title: '座位数',
+    dataIndex: 'seatCount',
+    key: 'seatCount'
   },
   {
-    title: '售卖情况',
-    dataIndex: 'sell',
-    key: 'sell'
+    title: '排数',
+    dataIndex: 'rowCount',
+    key: 'rowCount'
+  },
+  {
+    title: '列数',
+    dataIndex: 'colCount',
+    key: 'colCount'
   },
   {
     title: '操作',
@@ -159,17 +137,17 @@ const columns = [
 ]
 
 const onAdd = () => {
-  dailyTrainSeat.value = {}
+  dailyTrainCarriage.value = {}
   visible.value = true
 }
 
 const onEdit = (record) => {
-  dailyTrainSeat.value = window.Tool.copy(record)
+  dailyTrainCarriage.value = window.Tool.copy(record)
   visible.value = true
 }
 
 const onDelete = (record) => {
-  axios.delete('/business/admin/daily-train-seat/delete/' + record.id).then((response) => {
+  axios.delete('/business/admin/daily-train-carriage/delete/' + record.id).then((response) => {
     const data = response.data
     if (data.success) {
       notification.success({ description: '删除成功！' })
@@ -184,7 +162,7 @@ const onDelete = (record) => {
 }
 
 const handleOk = () => {
-  axios.post('/business/admin/daily-train-seat/save', dailyTrainSeat.value).then((response) => {
+  axios.post('/business/admin/daily-train-carriage/save', dailyTrainCarriage.value).then((response) => {
     const data = response.data
     if (data.success) {
       notification.success({ description: '保存成功！' })
@@ -210,7 +188,7 @@ const handleQuery = (param) => {
     }
   }
   loading.value = true
-  axios.get('/business/admin/daily-train-seat/query-list', {
+  axios.get('/business/admin/daily-train-carriage/query-list', {
     params: {
       page: param.page,
       size: param.size,
@@ -221,7 +199,7 @@ const handleQuery = (param) => {
     loading.value = false
     const data = response.data
     if (data.success) {
-      dailyTrainSeats.value = data.content.list
+      dailyTrainCarriages.value = data.content.list
       // 设置分页控件的值
       pagination.value.current = param.page
       pagination.value.total = data.content.total
@@ -241,9 +219,8 @@ const onChangeCode = (train) => {
   console.log('车次下拉框组件选择：', train)
   const t = Tool.copy(train)
   delete t.id
-  dailyTrainSeat.value = Object.assign(dailyTrainSeat.value, t)
+  dailyTrainCarriage.value = Object.assign(dailyTrainCarriage.value, t)
 }
-
 onMounted(() => {
   handleQuery({
     page: 1,

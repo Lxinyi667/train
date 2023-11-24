@@ -43,6 +43,11 @@
             <MenuUnfoldOutlined /> 每日车站
           </router-link>
         </a-menu-item>
+        <a-menu-item key="/business/daily-train-carriage">
+          <router-link to="/business/daily-train-carriage">
+            <MenuUnfoldOutlined /> 每日车厢
+          </router-link>
+        </a-menu-item>
         <a-menu-item key="/business/daily_train_seat">
           <router-link to="/business/daily_train_seat">
             <MenuUnfoldOutlined /> 每日座位

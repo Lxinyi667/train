@@ -2,7 +2,7 @@
     <p>
         <a-space>
             <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"/>
-            <train-select-view v-model:value="params.code" width="200px" />
+            <train-select-view v-model:value="params.trainCode" width="200px" />
             <a-button type="primary" @click="handleQuery()">查询</a-button>
             <a-button type="primary" @click="onAdd">新增</a-button>
         </a-space>
@@ -199,7 +199,9 @@ const handleQuery = (param) => {
   axios.get('/business/admin/daily-train-station/query-list', {
     params: {
       page: param.page,
-      size: param.size
+      size: param.size,
+      trainCode: params.value.trainCode,
+      date: params.value.date
     }
   }).then((response) => {
     loading.value = false

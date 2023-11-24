@@ -4,6 +4,8 @@ server:
     context-path: /business
 
 spring:
+  application:
+    name: business
   datasource:
     url: jdbc:mysql://localhost:3306/train_business?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
     username: root

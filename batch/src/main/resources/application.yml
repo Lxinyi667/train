@@ -4,6 +4,8 @@ server:
     context-path: /batch
 
 spring:
+  application:
+    name: batch
   datasource:
     url: jdbc:mysql://localhost:3306/train_batch?characterEncoding=UTF8&autoReconnect=true&serverTimezone=Asia/Shanghai
     username: root

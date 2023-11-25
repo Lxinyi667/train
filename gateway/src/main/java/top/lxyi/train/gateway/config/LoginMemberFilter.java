@@ -20,6 +20,8 @@ public class LoginMemberFilter implements Ordered, GlobalFilter {
         // 排除不需要拦截的请求
         if (path.contains("/admin")
                 || path.contains("/hello")
+                || path.contains("/business/admin/train/query-all")
+                || path.contains("/business/admin/daily-train/query-list")
                 || path.contains("/member/member/login")
                 || path.contains("/member/member/register")
                 || path.contains("/member/member/send-code")) {

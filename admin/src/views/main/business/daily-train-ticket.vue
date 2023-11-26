@@ -1,8 +1,12 @@
 <template>
     <p>
         <a-space>
-            <a-button type="primary" @click="handleQuery()">刷新</a-button>
-                            <a-button type="primary" @click="onAdd">新增</a-button>
+          <train-select-view v-model="params.trainCode" width="200px"/>
+          <a-date-picker v-model:valve="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"/>
+          <station-select-view v-model="params.start" width="200px"/>
+          <station-select-view v-model="params.end" width="200px"/>
+            <a-button type="primary" @click="handleQuery()">查找</a-button>
+                            <!-- <a-button type="primary" @click="onAdd">新增</a-button> -->
         </a-space>
     </p>
     <a-table :dataSource="dailyTrainTickets"
@@ -92,6 +96,8 @@
 import { ref, onMounted } from 'vue'
 import { notification } from 'ant-design-vue'
 import axios from 'axios'
+import TrainSelectView from '@/components/train-select.vue'
+import StationSelectView from '@/components/station-select.vue'
 
 const visible = ref(false)
 const dailyTrainTicket = ref({
@@ -262,6 +268,12 @@ const handleOk = () => {
     }
   })
 }
+const params = ref({
+  trainCode: null,
+  date: null,
+  start: null,
+  end: null
+})
 
 const handleQuery = (param) => {
   if (!param) {
@@ -274,7 +286,11 @@ const handleQuery = (param) => {
   axios.get('/business/admin/daily-train-ticket/query-list', {
     params: {
       page: param.page,
-      size: param.size
+      size: param.size,
+      trainCode: params.value.trainCode,
+      date: params.value.date,
+      start: params.value.start,
+      end: params.value.end
     }
   }).then((response) => {
     loading.value = false

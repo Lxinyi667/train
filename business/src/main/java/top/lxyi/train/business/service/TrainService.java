@@ -6,6 +6,8 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import top.lxyi.train.business.domain.DailyTrainTicket;
+import top.lxyi.train.business.mapper.DailyTrainTicketMapper;
 import top.lxyi.train.common.exception.BusinessException;
 import top.lxyi.train.common.exception.BusinessExceptionEnum;
 import top.lxyi.train.common.resp.PageResp;
@@ -30,6 +32,10 @@ public class TrainService {
 
     @Resource
     private TrainMapper trainMapper;
+    @Resource
+    private DailyTrainTicketService dailyTrainTicketService;
+    @Resource
+    private DailyTrainTicketMapper dailyTrainTicketMapper;
 
     public void save(TrainSaveReq req) {
         DateTime now = DateTime.now();

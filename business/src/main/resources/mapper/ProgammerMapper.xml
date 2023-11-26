@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.lxyi.train.business.mapper.ProgammerMapper">
   <resultMap id="BaseResultMap" type="top.lxyi.train.business.domain.Progammer">
-    <id column="﻿id" jdbcType="BIGINT" property="﻿id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
@@ -72,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    ﻿id, account, mobile, nickname, avatar, description, homepage, skill, create_time, 
+    id, account, mobile, nickname, avatar, description, homepage, skill, create_time, 
     update_time
   </sql>
   <select id="selectByExample" parameterType="top.lxyi.train.business.domain.ProgammerExample" resultMap="BaseResultMap">
@@ -93,11 +93,11 @@
     select 
     <include refid="Base_Column_List" />
     from progammer
-    where ﻿id = #{﻿id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from progammer
-    where ﻿id = #{﻿id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="top.lxyi.train.business.domain.ProgammerExample">
     delete from progammer
@@ -106,11 +106,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="top.lxyi.train.business.domain.Progammer">
-    insert into progammer (﻿id, account, mobile, 
+    insert into progammer (id, account, mobile, 
       nickname, avatar, description, 
       homepage, skill, create_time, 
       update_time)
-    values (#{﻿id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{homepage,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
       #{updateTime,jdbcType=DATE})
@@ -118,8 +118,8 @@
   <insert id="insertSelective" parameterType="top.lxyi.train.business.domain.Progammer">
     insert into progammer
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="﻿id != null">
-        ﻿id,
+      <if test="id != null">
+        id,
       </if>
       <if test="account != null">
         account,
@@ -150,8 +150,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="﻿id != null">
-        #{﻿id,jdbcType=BIGINT},
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
@@ -191,8 +191,8 @@
   <update id="updateByExampleSelective" parameterType="map">
     update progammer
     <set>
-      <if test="row.﻿id != null">
-        ﻿id = #{row.﻿id,jdbcType=BIGINT},
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
       </if>
       <if test="row.account != null">
         account = #{row.account,jdbcType=VARCHAR},
@@ -228,7 +228,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update progammer
-    set ﻿id = #{row.﻿id,jdbcType=BIGINT},
+    set id = #{row.id,jdbcType=BIGINT},
       account = #{row.account,jdbcType=VARCHAR},
       mobile = #{row.mobile,jdbcType=VARCHAR},
       nickname = #{row.nickname,jdbcType=VARCHAR},
@@ -273,7 +273,7 @@
         update_time = #{updateTime,jdbcType=DATE},
       </if>
     </set>
-    where ﻿id = #{﻿id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="top.lxyi.train.business.domain.Progammer">
     update progammer
@@ -286,6 +286,6 @@
       skill = #{skill,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=DATE},
       update_time = #{updateTime,jdbcType=DATE}
-    where ﻿id = #{﻿id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

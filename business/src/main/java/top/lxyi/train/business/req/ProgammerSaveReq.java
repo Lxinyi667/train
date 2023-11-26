@@ -11,7 +11,6 @@ public class ProgammerSaveReq {
     /**
     * 
     */
-    @NotNull(message = "【】不能为空")
     private Long id;
 
     /**
@@ -61,11 +60,11 @@ public class ProgammerSaveReq {
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date updateTime;
 
-    public Long getid() {
+    public Long getId() {
     return id;
     }
 
-    public void set﻿id(Long id) {
+    public void setId(Long id) {
     this.id = id;
     }
 

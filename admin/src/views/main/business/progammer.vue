@@ -11,6 +11,15 @@
              @change="handleTableChange"
              :loading="loading">
         <template #bodyCell="{ column, record }">
+            <template v-if="column.dataIndex =='homepage'">
+                <a :href="record[column.dataIndex]" target="_blank">{{
+                record[column.dataIndex]
+                }}
+                </a>
+                </template>
+                <template v-if="column.dataIndex =='avatar'">
+                <a-avatar :src="record[column.dataIndex]"/>
+            </template>
             <template v-if="column.dataIndex === 'operation'">
                     <a-space>
                         <a-popconfirm
@@ -27,28 +36,25 @@
         <a-modal v-model:visible="visible" title="" @ok="handleOk"
                  ok-text="确认" cancel-text="取消">
             <a-form :model="progammer" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
-                        <a-form-item label="">
-                                <a-input v-model:value="progammer.id"/>
-                        </a-form-item>
-                        <a-form-item label="">
+                        <a-form-item label="account">
                                 <a-input v-model:value="progammer.account"/>
                         </a-form-item>
-                        <a-form-item label="">
+                        <a-form-item label="mobile">
                                 <a-input v-model:value="progammer.mobile"/>
                         </a-form-item>
-                        <a-form-item label="">
+                        <a-form-item label="nickname">
                                 <a-input v-model:value="progammer.nickname"/>
                         </a-form-item>
-                        <a-form-item label="">
+                        <a-form-item label="avatar">
                                 <a-input v-model:value="progammer.avatar"/>
                         </a-form-item>
-                        <a-form-item label="">
+                        <a-form-item label="description">
                                 <a-input v-model:value="progammer.description"/>
                         </a-form-item>
-                        <a-form-item label="">
+                        <a-form-item label="homepage">
                                 <a-input v-model:value="progammer.homepage"/>
                         </a-form-item>
-                        <a-form-item label="">
+                        <a-form-item label="skill">
                                 <a-input v-model:value="progammer.skill"/>
                         </a-form-item>
             </a-form>
@@ -83,42 +89,37 @@ const pagination = ref({
 const loading = ref(false)
 const columns = [
   {
-    title: '',
-    dataIndex: '﻿id',
-    key: '﻿id'
-  },
-  {
-    title: '',
+    title: 'account',
     dataIndex: 'account',
     key: 'account'
   },
   {
-    title: '',
+    title: 'mobile',
     dataIndex: 'mobile',
     key: 'mobile'
   },
   {
-    title: '',
+    title: 'nickname',
     dataIndex: 'nickname',
     key: 'nickname'
   },
   {
-    title: '',
+    title: 'avatar',
     dataIndex: 'avatar',
     key: 'avatar'
   },
   {
-    title: '',
+    title: 'description',
     dataIndex: 'description',
     key: 'description'
   },
   {
-    title: '',
+    title: 'homepage',
     dataIndex: 'homepage',
     key: 'homepage'
   },
   {
-    title: '',
+    title: 'skill',
     dataIndex: 'skill',
     key: 'skill'
   },

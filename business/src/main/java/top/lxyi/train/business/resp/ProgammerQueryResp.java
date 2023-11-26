@@ -10,6 +10,7 @@ public class ProgammerQueryResp {
     /**
     * 
     */
+        @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
     /**
@@ -60,11 +61,11 @@ public class ProgammerQueryResp {
     private Date updateTime;
 
 
-    public Long get﻿id() {
+    public Long getId() {
     return id;
     }
 
-    public void setid(Long id) {
+    public void setId(Long id) {
     this.id = id;
     }
 

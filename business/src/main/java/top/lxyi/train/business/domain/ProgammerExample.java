@@ -132,63 +132,63 @@ public class ProgammerExample {
             addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
-        public Criteria and﻿idIsNull() {
-            addCriterion("﻿id is null");
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idIsNotNull() {
-            addCriterion("﻿id is not null");
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idEqualTo(Long value) {
-            addCriterion("﻿id =", value, "﻿id");
+        public Criteria andIdEqualTo(Long value) {
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idNotEqualTo(Long value) {
-            addCriterion("﻿id <>", value, "﻿id");
+        public Criteria andIdNotEqualTo(Long value) {
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idGreaterThan(Long value) {
-            addCriterion("﻿id >", value, "﻿id");
+        public Criteria andIdGreaterThan(Long value) {
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idGreaterThanOrEqualTo(Long value) {
-            addCriterion("﻿id >=", value, "﻿id");
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idLessThan(Long value) {
-            addCriterion("﻿id <", value, "﻿id");
+        public Criteria andIdLessThan(Long value) {
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idLessThanOrEqualTo(Long value) {
-            addCriterion("﻿id <=", value, "﻿id");
+        public Criteria andIdLessThanOrEqualTo(Long value) {
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idIn(List<Long> values) {
-            addCriterion("﻿id in", values, "﻿id");
+        public Criteria andIdIn(List<Long> values) {
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idNotIn(List<Long> values) {
-            addCriterion("﻿id not in", values, "﻿id");
+        public Criteria andIdNotIn(List<Long> values) {
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idBetween(Long value1, Long value2) {
-            addCriterion("﻿id between", value1, value2, "﻿id");
+        public Criteria andIdBetween(Long value1, Long value2) {
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria and﻿idNotBetween(Long value1, Long value2) {
-            addCriterion("﻿id not between", value1, value2, "﻿id");
+        public Criteria andIdNotBetween(Long value1, Long value2) {
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 

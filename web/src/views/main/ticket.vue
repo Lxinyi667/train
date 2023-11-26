@@ -15,6 +15,7 @@
            :loading="loading">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
+        <a-button type="primary" @click="toOrder(record)">预订</a-button>
       </template>
       <template v-else-if="column.dataIndex === 'station'">
         {{ record.start }}<br/>
@@ -80,7 +81,13 @@ import axios from 'axios'
 import TrainSelectView from '@/components/train-select.vue'
 import StationSelectView from '@/components/station-select.vue'
 import dayjs from 'dayjs'
+import router from '@/router'
 
+const toorder = (record) => {
+  dailyTrainTicket.value = Tool.copy(record)
+  SessionStorage.set('dailyTrainTicket', dailyTrainTicket.value)
+  router.push('/order')
+}
 const visible = ref(false)
 const dailyTrainTicket = ref({
   id: undefined,
@@ -159,6 +166,10 @@ const columns = [
     title: '硬卧',
     dataIndex: 'yw',
     key: 'yw'
+  },
+  {
+    title: '操作',
+    dataIndex: 'operation'
   }
 ]
 

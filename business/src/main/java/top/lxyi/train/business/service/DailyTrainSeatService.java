@@ -78,6 +78,19 @@ public class DailyTrainSeatService {
         }
         LOG.info("生成日期【{}】车次【{}】的座位信息结束",DateUtil.formatDate(date),trainCode);
     }
+    //统计某日某车次某种座位类型的座位数：
+    public int countSeat(Date date,String trainCode,String seatType){
+        DailyTrainSeatExample example =new DailyTrainSeatExample();
+        example.createCriteria()
+                .andDateEqualTo(date)
+                .andTrainCodeEqualTo(trainCode)
+                .andSeatTypeEqualTo(seatType);
+        long l = dailyTrainSeatMapper.countByExample(example);
+        if (l == 0L){
+            return -1;
+        }
+        return (int) l;
+    }
     public PageResp<DailyTrainSeatQueryResp> queryList(DailyTrainSeatQueryReq req) {
         DailyTrainSeatExample dailyTrainSeatExample = new DailyTrainSeatExample();
         dailyTrainSeatExample.setOrderByClause("date desc,train_code asc");

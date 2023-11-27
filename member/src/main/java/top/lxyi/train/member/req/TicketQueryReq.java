@@ -4,9 +4,19 @@ package top.lxyi.train.member.req;
 import top.lxyi.train.common.req.PageReq;
 
 public class TicketQueryReq extends PageReq {
-@Override
-public String toString() {
-return "TicketQueryReq{" +
-"} " + super.toString();
-}
+    private Long memberId;
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+
+    @Override
+    public String toString() {
+        return "TicketQueryReq{" +
+        "} " + super.toString();
+    }
 }

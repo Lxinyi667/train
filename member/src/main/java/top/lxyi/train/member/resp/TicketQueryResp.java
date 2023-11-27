@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
         import java.util.Date;
         import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class ticketQueryResp {
+public class TicketQueryResp {
 
     /**
     * id

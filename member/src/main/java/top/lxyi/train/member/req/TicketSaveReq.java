@@ -6,7 +6,7 @@ package top.lxyi.train.member.req;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class ticketSaveReq {
+public class TicketSaveReq {
 
     /**
     * id

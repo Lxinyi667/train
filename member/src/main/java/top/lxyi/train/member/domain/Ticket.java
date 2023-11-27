@@ -2,7 +2,7 @@ package top.lxyi.train.member.domain;
 
 import java.util.Date;
 
-public class ticket {
+public class Ticket {
     private Long id;
 
     private Long memberId;

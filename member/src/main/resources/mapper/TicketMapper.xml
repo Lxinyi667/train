@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.lxyi.train.member.mapper.ticketMapper">
-  <resultMap id="BaseResultMap" type="top.lxyi.train.member.domain.ticket">
+<mapper namespace="top.lxyi.train.member.mapper.TicketMapper">
+  <resultMap id="BaseResultMap" type="top.lxyi.train.member.domain.Ticket">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="member_id" jdbcType="BIGINT" property="memberId" />
     <result column="passenger_id" jdbcType="BIGINT" property="passengerId" />
@@ -81,7 +81,7 @@
     id, member_id, passenger_id, passenger_name, `date`, train_code, carriage_index, 
     `row`, col, `start`, start_time, `end`, end_time, seat_type, create_time, update_time
   </sql>
-  <select id="selectByExample" parameterType="top.lxyi.train.member.domain.ticketExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.lxyi.train.member.domain.TicketExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -105,13 +105,13 @@
     delete from ticket
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="top.lxyi.train.member.domain.ticketExample">
+  <delete id="deleteByExample" parameterType="top.lxyi.train.member.domain.TicketExample">
     delete from ticket
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.lxyi.train.member.domain.ticket">
+  <insert id="insert" parameterType="top.lxyi.train.member.domain.Ticket">
     insert into ticket (id, member_id, passenger_id, 
       passenger_name, `date`, train_code, 
       carriage_index, `row`, col, 
@@ -125,7 +125,7 @@
       #{endTime,jdbcType=TIME}, #{seatType,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="top.lxyi.train.member.domain.ticket">
+  <insert id="insertSelective" parameterType="top.lxyi.train.member.domain.Ticket">
     insert into ticket
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -228,7 +228,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.lxyi.train.member.domain.ticketExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="top.lxyi.train.member.domain.TicketExample" resultType="java.lang.Long">
     select count(*) from ticket
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -312,7 +312,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.lxyi.train.member.domain.ticket">
+  <update id="updateByPrimaryKeySelective" parameterType="top.lxyi.train.member.domain.Ticket">
     update ticket
     <set>
       <if test="memberId != null">
@@ -363,7 +363,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.lxyi.train.member.domain.ticket">
+  <update id="updateByPrimaryKey" parameterType="top.lxyi.train.member.domain.Ticket">
     update ticket
     set member_id = #{memberId,jdbcType=BIGINT},
       passenger_id = #{passengerId,jdbcType=BIGINT},

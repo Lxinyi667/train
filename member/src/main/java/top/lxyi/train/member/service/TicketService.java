@@ -7,12 +7,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
-import top.lxyi.train.member.domain.ticket;
-import top.lxyi.train.member.domain.ticketExample;
-import top.lxyi.train.member.mapper.ticketMapper;
-import top.lxyi.train.member.req.ticketQueryReq;
-import top.lxyi.train.member.req.ticketSaveReq;
-import top.lxyi.train.member.resp.ticketQueryResp;
+import top.lxyi.train.member.domain.Ticket;
+import top.lxyi.train.member.domain.TicketExample;
+import top.lxyi.train.member.mapper.TicketMapper;
+import top.lxyi.train.member.req.TicketQueryReq;
+import top.lxyi.train.member.req.TicketSaveReq;
+import top.lxyi.train.member.resp.TicketQueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +21,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ticketService {
+public class TicketService {
 
-private static final Logger LOG = LoggerFactory.getLogger(ticketService.class);
+private static final Logger LOG = LoggerFactory.getLogger(TicketService.class);
 
 @Resource
-private ticketMapper ticketMapper;
+private TicketMapper ticketMapper;
 
-public void save(ticketSaveReq req) {
+public void save(TicketSaveReq req) {
 DateTime now = DateTime.now();
-ticket ticket = BeanUtil.copyProperties(req, ticket.class);
+Ticket ticket = BeanUtil.copyProperties(req, Ticket.class);
 if (ObjectUtil.isNull(ticket.getId())) {
 ticket.setId(SnowUtil.getSnowflakeNextId());
 ticket.setCreateTime(now);
@@ -42,23 +42,23 @@ ticketMapper.updateByPrimaryKey(ticket);
 }
 }
 
-public PageResp<ticketQueryResp> queryList(ticketQueryReq req) {
-    ticketExample ticketExample = new ticketExample();
+public PageResp<TicketQueryResp> queryList(TicketQueryReq req) {
+    TicketExample ticketExample = new TicketExample();
     ticketExample.setOrderByClause("id desc");
-    ticketExample.Criteria criteria = ticketExample.createCriteria();
+    TicketExample.Criteria criteria = ticketExample.createCriteria();
 
     LOG.info("查询页码：{}", req.getPage());
     LOG.info("每页条数：{}", req.getSize());
     PageHelper.startPage(req.getPage(), req.getSize());
-    List<ticket> ticketList = ticketMapper.selectByExample(ticketExample);
+    List<Ticket> ticketList = ticketMapper.selectByExample(ticketExample);
 
-    PageInfo<ticket> pageInfo = new PageInfo<>(ticketList);
+    PageInfo<Ticket> pageInfo = new PageInfo<>(ticketList);
     LOG.info("总行数：{}", pageInfo.getTotal());
     LOG.info("总页数：{}", pageInfo.getPages());
 
-    List<ticketQueryResp> list = BeanUtil.copyToList(ticketList, ticketQueryResp.class);
+    List<TicketQueryResp> list = BeanUtil.copyToList(ticketList, TicketQueryResp.class);
 
-        PageResp<ticketQueryResp> pageResp = new PageResp<>();
+        PageResp<TicketQueryResp> pageResp = new PageResp<>();
             pageResp.setTotal(pageInfo.getTotal());
             pageResp.setList(list);
             return pageResp;

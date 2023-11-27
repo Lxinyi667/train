@@ -50,6 +50,8 @@ public class ConfirmOrderService {
 
     @Resource
     private DailyTrainSeatService dailyTrainSeatService;
+    @Resource
+    private AfterConfirmOrderService afterConfirmOrderService;
 
     public void save(ConfirmOrderDoReq req) {
         DateTime now = DateTime.now();
@@ -192,7 +194,7 @@ public class ConfirmOrderService {
         // 挑选符合条件的座位，如果这个车箱不满足，则进入下个车箱（多个选座应该在同一个车厢）
 
         // 选中座位后事务处理：
-
+        afterConfirmOrderService.afterDoConfirm(dailyTrainTicket,finalSeatList);
         // 座位表修改售卖情况sell；
         // 余票详情表修改余票；
         // 为会员增加购票记录

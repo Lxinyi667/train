@@ -12,6 +12,7 @@
       <a-menu-item key="/about">
         <router-link to="/about"> <user-outlined /> 关于 </router-link>
       </a-menu-item>
+
       <a-sub-menu key="batch">
         <template #title>
           <span>
@@ -26,6 +27,21 @@
         </a-menu-item>
       </a-sub-menu>
 
+      <a-sub-menu key="member">
+        <template #title>
+          <span>
+            <UnorderedListOutlined/>
+              会员管理
+          </span>
+        </template>
+        <a-menu-item key="/member/ticket">
+          <router-link to="/member/ticket">
+            <MenuUnfoldOutlined/>
+              会员车票
+          </router-link>
+        </a-menu-item>
+      </a-sub-menu>
+
       <a-sub-menu key="business">
         <template #title>
           <span>
@@ -33,7 +49,6 @@
             业务管理
           </span>
         </template>
-
         <a-menu-item key="/business/confirm-order">
           <router-link to="/business/confirm-order">
             <MenuUnfoldOutlined /> 订单信息

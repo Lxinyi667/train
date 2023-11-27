@@ -100,6 +100,7 @@
             </div>
             <br>
             最终购票： {{ tickets }}
+            最终选座： {{ chooseSeatObj }}
             <!-- <br>
             座位类型SEAT_COL_ARRAY:{{SEAT_COL_ARRAY}} -->
         </div>
@@ -133,6 +134,7 @@ const SEAT_COL_ARRAY = computed(() => {
 // }
 const chooseSeatObj = ref({})
 watch(() => SEAT_COL_ARRAY.value, () => {
+  chooseSeatObj.value = {}
   for (let i = 1; i <= 2; i++) {
     SEAT_COL_ARRAY.value.forEach((item) => {
       chooseSeatObj.value[item.code + i] = false

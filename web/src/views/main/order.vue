@@ -69,7 +69,7 @@
                     </span>
                 </span>
                 </a-col>
-                <a-col span="3">
+                <a-col :span="3">
                     <span v-for="item in seatTypes" :key="item.code">
                         <span v-if="item.code === ticket.seatTypeCode">
                         {{ item.desc }}
@@ -77,12 +77,18 @@
                 </span>
                 </a-col>
             </a-row>
+            <br>
+            选座类型chooseSeatType:{{ chooseSeatType }}
+            <br>
+            选座对象chooseSeatType:{{ chooseSeatObj }}
+            <br>
+            座位类型SEAT_COL_ARRAY:{{SEAT_COL_ARRAY}}
         </div>
     </a-modal>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import axios from 'axios'
 import { notification } from 'ant-design-vue'
 
@@ -94,6 +100,28 @@ console.log('下单的车次信息', dailyTrainTicket)
 
 const SEAT_TYPE = window.SEAT_TYPE
 console.log(SEAT_TYPE)
+
+// 0:不支持选座；1：选一等座；2：选二等座
+const chooseSeatType = ref(0)
+// 根据选择的座位类型，计算出对应的列，比如要选的是一等座，就筛选出ACQ,要选的是二等座，就筛选出ABCDF
+const SEAT_COL_ARRAY = computed(() => {
+  return window.SEAT_COL_ARRAY.filter(item => item.type === chooseSeatType.value)
+})
+// 选择的座位
+// {
+// A1:false,C1:trve,D1:false,F1:false,
+// A2:false,C2:false,D2:true,F2:false
+// }
+const chooseSeatObj = ref({})
+watch(() => SEAT_COL_ARRAY.value, () => {
+  for (let i = 1; i <= 2; i++) {
+    SEAT_COL_ARRAY.value.forEach((item) => {
+      chooseSeatObj.value[item.code + i] = false
+    })
+  }
+  console.Log('初始化两排座位，都是末选中：', chooseSeatObj.value)
+}, { immediate: true })
+
 // 本车次提供的座位类型seatTypes，含票价，余票等信息，例：
 // {
 //   type: "YDZ",
@@ -177,6 +205,32 @@ const finishCheckPassenger = () => {
     }
   }
   console.Log('前端余票校验通过')
+  // 判断是否支持选座，只有纯一等座和纯二等座支持选座
+  // 先筛选出购票列表中的所有座位类型，比如四张表：[1,1,2,2]
+  const ticketSeatTypeCodes = []
+  for (let i = 0; i < tickets.value.length; i++) {
+    const ticket = tickets.value[i]
+    ticketSeatTypeCodes.push(ticket.seatTypeCode)
+  }
+  // 为购票列表中的所有座位类型去重：[1,2]
+  const ticketSeatTypeCodesSet = Array.from(new Set(ticketSeatTypeCodes))
+  console.log('选好的座位类型：', ticketSeatTypeCodesSet)
+  if (ticketSeatTypeCodesSet.Length !== 1) {
+    console.log('选了多种座位，不支持选座')
+    chooseSeatType.value = 0
+  } else {
+    // icketSeatTypeCodesSet,length===I,即只选择了一种座位（不是一个座位，是一种座位）
+    if (ticketSeatTypeCodesSet[0] === SEAT_TYPE.YDZ.code) {
+      console.log('一等座选座')
+      chooseSeatType.value = SEAT_TYPE.YDZ.code
+    } else if (ticketSeatTypeCodesSet[0] === SEAT_TYPE.EDZ.code) {
+      console.log('二等座选座')
+      chooseSeatType.value = SEAT_TYPE.EDZ.code
+    } else {
+      console.log('不是一等座或二等座，不支持选座')
+      chooseSeatType.value = 0
+    }
+  }
   // 弹出确认界面
   visible.value = true
 }

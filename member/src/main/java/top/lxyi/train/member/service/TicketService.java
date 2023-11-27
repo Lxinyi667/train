@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import top.lxyi.train.common.req.MemberTicketReq;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
 import top.lxyi.train.member.domain.Ticket;
@@ -23,24 +24,19 @@ import java.util.List;
 @Service
 public class TicketService {
 
-private static final Logger LOG = LoggerFactory.getLogger(TicketService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TicketService.class);
 
-@Resource
-private TicketMapper ticketMapper;
+    @Resource
+    private TicketMapper ticketMapper;
 
-public void save(TicketSaveReq req) {
-DateTime now = DateTime.now();
-Ticket ticket = BeanUtil.copyProperties(req, Ticket.class);
-if (ObjectUtil.isNull(ticket.getId())) {
-ticket.setId(SnowUtil.getSnowflakeNextId());
-ticket.setCreateTime(now);
-ticket.setUpdateTime(now);
-ticketMapper.insert(ticket);
-} else {
-ticket.setUpdateTime(now);
-ticketMapper.updateByPrimaryKey(ticket);
-}
-}
+    public void save(MemberTicketReq req) throws Exception {
+        DateTime now = DateTime.now();
+        Ticket ticket = BeanUtil.copyProperties(req, Ticket.class);
+        ticket.setId(SnowUtil.getSnowflakeNextId());
+        ticket.setCreateTime(now);
+        ticket.setUpdateTime(now);
+        ticketMapper.insert(ticket);
+    }
 
 public PageResp<TicketQueryResp> queryList(TicketQueryReq req) {
     TicketExample ticketExample = new TicketExample();

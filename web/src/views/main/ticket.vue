@@ -83,9 +83,9 @@ import StationSelectView from '@/components/station-select.vue'
 import dayjs from 'dayjs'
 import router from '@/router'
 
-const toorder = (record) => {
+const toOrder = (record) => {
   dailyTrainTicket.value = Tool.copy(record)
-  SessionStorage.set('dailyTrainTicket', dailyTrainTicket.value)
+  SessionStorage.set(SESSION_ORDER, dailyTrainTicket.value)
   router.push('/order')
 }
 const visible = ref(false)

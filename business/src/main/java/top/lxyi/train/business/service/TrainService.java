@@ -79,7 +79,7 @@ public class TrainService {
 //        trainExample.setOrderByClause("code desc");
 //        List<Train> trainList = trainMapper.selectByExample(trainExample);
         List<Train> trainList = selectAll();
-        trainList = selectAll();
+//        trainList = selectAll();
         return BeanUtil.copyToList(trainList, TrainQueryResp.class);
     }
     public PageResp<TrainQueryResp> queryList(TrainQueryReq req) {

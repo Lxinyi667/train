@@ -1,10 +1,9 @@
 package top.lxyi.train.business.controller.admin;
 
-import top.lxyi.train.common.context.LoginMemberContext;
 import top.lxyi.train.common.resp.CommonResp;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.business.req.ConfirmOrderQueryReq;
-import top.lxyi.train.business.req.ConfirmOrderSaveReq;
+import top.lxyi.train.business.req.ConfirmOrderDoReq;
 import top.lxyi.train.business.resp.ConfirmOrderQueryResp;
 import top.lxyi.train.business.service.ConfirmOrderService;
 import jakarta.annotation.Resource;
@@ -15,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/confirm-order")
 public class ConfirmOrderAdminController {
 
-@Resource
-private ConfirmOrderService confirmOrderService;
+    @Resource
+    private ConfirmOrderService confirmOrderService;
 
-@PostMapping("/save")
-public CommonResp<Object> save(@Valid @RequestBody ConfirmOrderSaveReq req) {
-    confirmOrderService.save(req);
-    return new CommonResp<>();
+    @PostMapping("/save")
+    public CommonResp<Object> save(@Valid @RequestBody ConfirmOrderDoReq req) {
+        confirmOrderService.save(req);
+        return new CommonResp<>();
     }
 
     @GetMapping("/query-list")

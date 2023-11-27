@@ -11,7 +11,7 @@ import top.lxyi.train.business.domain.ConfirmOrder;
 import top.lxyi.train.business.domain.ConfirmOrderExample;
 import top.lxyi.train.business.mapper.ConfirmOrderMapper;
 import top.lxyi.train.business.req.ConfirmOrderQueryReq;
-import top.lxyi.train.business.req.ConfirmOrderSaveReq;
+import top.lxyi.train.business.req.ConfirmOrderDoReq;
 import top.lxyi.train.business.resp.ConfirmOrderQueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -28,20 +28,22 @@ private static final Logger LOG = LoggerFactory.getLogger(ConfirmOrderService.cl
 @Resource
 private ConfirmOrderMapper confirmOrderMapper;
 
-public void save(ConfirmOrderSaveReq req) {
-DateTime now = DateTime.now();
-ConfirmOrder confirmOrder = BeanUtil.copyProperties(req, ConfirmOrder.class);
-if (ObjectUtil.isNull(confirmOrder.getId())) {
-confirmOrder.setId(SnowUtil.getSnowflakeNextId());
-confirmOrder.setCreateTime(now);
-confirmOrder.setUpdateTime(now);
-confirmOrderMapper.insert(confirmOrder);
-} else {
-confirmOrder.setUpdateTime(now);
-confirmOrderMapper.updateByPrimaryKey(confirmOrder);
+public void save(ConfirmOrderDoReq req) {
+    DateTime now = DateTime.now();
+    ConfirmOrder confirmOrder = BeanUtil.copyProperties(req, ConfirmOrder.class);
+    if (ObjectUtil.isNull(confirmOrder.getId())) {
+        confirmOrder.setId(SnowUtil.getSnowflakeNextId());
+        confirmOrder.setCreateTime(now);
+        confirmOrder.setUpdateTime(now);
+        confirmOrderMapper.insert(confirmOrder);
+    } else {
+        confirmOrder.setUpdateTime(now);
+        confirmOrderMapper.updateByPrimaryKey(confirmOrder);
+    }
 }
-}
+public void doConfirm(ConfirmOrderDoReq req){
 
+}
 public PageResp<ConfirmOrderQueryResp> queryList(ConfirmOrderQueryReq req) {
     ConfirmOrderExample confirmOrderExample = new ConfirmOrderExample();
     confirmOrderExample.setOrderByClause("id desc");

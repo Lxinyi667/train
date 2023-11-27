@@ -210,6 +210,22 @@ const handleOk = () => {
     return
   }
   console.log('最终购票：', tickets.value)
+  // 调用生成订单的接口
+  axios.post('/business/confirm-order/do', {
+    dailyTrainTicketId: dailyTrainTicket.id,
+    date: dailyTrainTicket.date,
+    trainCode: dailyTrainTicket.trainCode,
+    start: dailyTrainTicket.start,
+    end: dailyTrainTicket.end,
+    tickets: tickets.value
+  }).then((response) => {
+    const data = response.data
+    if (data.success) {
+      notification.success({ description: '下单成功!' })
+    } else {
+      notification.error({ description: data.message })
+    }
+  })
 }
 
 const handleQueryPassenger = () => {

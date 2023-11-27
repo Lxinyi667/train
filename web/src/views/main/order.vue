@@ -140,7 +140,7 @@ watch(() => SEAT_COL_ARRAY.value, () => {
       chooseSeatObj.value[item.code + i] = false
     })
   }
-  console.Log('初始化两排座位，都是末选中：', chooseSeatObj.value)
+  console.log('初始化两排座位，都是末选中：', chooseSeatObj.value)
 }, { immediate: true })
 
 // 本车次提供的座位类型seatTypes，含票价，余票等信息，例：
@@ -187,7 +187,7 @@ watch(() => passengerChecks.value, (newVal, oldVal) => {
 }, { immediate: true })
 
 const handleOk = () => {
-  console.Log('选好的座位：', chooseSeatObj.value)
+  console.log('选好的座位：', chooseSeatObj.value)
   // 设置每张票的座位
   // 先清空购票列表的座位，有可能之前选了并设置座位了，但选座数不对被拦截了，又重新选一遍
   for (let i = 0; i < tickets.value.length; i++) {
@@ -251,7 +251,8 @@ const finishCheckPassenger = () => {
       }
     }
   }
-  console.Log('前端余票校验通过')
+  console.log('前端余票校验通过')
+
   // 判断是否支持选座，只有纯一等座和纯二等座支持选座
   // 先筛选出购票列表中的所有座位类型，比如四张表：[1,1,2,2]
   const ticketSeatTypeCodes = []
@@ -286,7 +287,7 @@ const finishCheckPassenger = () => {
         if (ticketSeatTypeCodesSet[0] === seatType.code) {
         // 判断余票，小于20张就不支持选座
           if (seatType.count < 20) {
-            console.Log('余票小于20张就不支持选座')
+            console.log('余票小于20张就不支持选座')
             chooseSeatType.value = 0
             break
           }

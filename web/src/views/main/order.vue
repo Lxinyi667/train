@@ -49,9 +49,9 @@
     <div v-if="tickets.length >0">
         <a-button type="primary" size="large" @click="finishCheckPassenger">提交订单</a-button>
     </div>
-    <a-modal v-model:visible="visible" title="请核对l以下信息"
+    <a-modal v-model:visible="visible" title="请核对以下信息"
             style="top: 50px; width: 800px"
-            ok-text="确认" cancel-text="取消">
+            ok-text="确认" cancel-text="取消" @ok="handleOk">
         <div class="order-tickets">
             <a-row class="order-tickets-header" v-if="tickets.length > 0">
                 <a-col :span="3">乘客</a-col>
@@ -98,6 +98,8 @@
                 </div>
                 <div style="color:#999999">提示：您可以选择{{ tickets.length }}个座位</div>
             </div>
+            <br>
+            最终购票： {{ tickets }}
             <!-- <br>
             座位类型SEAT_COL_ARRAY:{{SEAT_COL_ARRAY}} -->
         </div>
@@ -181,6 +183,32 @@ watch(() => passengerChecks.value, (newVal, oldVal) => {
     passengerIdCard: item.idCard
   }))
 }, { immediate: true })
+
+const handleOk = () => {
+  console.Log('选好的座位：', chooseSeatObj.value)
+  // 设置每张票的座位
+  // 先清空购票列表的座位，有可能之前选了并设置座位了，但选座数不对被拦截了，又重新选一遍
+  for (let i = 0; i < tickets.value.length; i++) {
+    tickets.value[i].seat = null
+  }
+  let i = -1
+  // 要么不选座位，要么所选座位应该等于购票数，
+  for (const key in chooseSeatObj.value) {
+    if (chooseSeatObj.value[key]) {
+      i++
+      if (i > tickets.value.Length - 1) {
+        notification.error({ description: '所选座位数太于购票数' })
+        return
+      }
+      tickets.value[i].seat = key
+    }
+  }
+  if (i > -1 && i < (tickets.value.length - 1)) {
+    notification.error({ description: '所选座位数小于购票数' })
+    return
+  }
+  console.log('最终购票：', tickets.value)
+}
 
 const handleQueryPassenger = () => {
   axios.get('/member/passenger/query-mine').then((response) => {

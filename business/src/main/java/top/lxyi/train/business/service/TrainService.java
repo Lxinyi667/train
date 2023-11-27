@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.transaction.annotation.Transactional;
 import top.lxyi.train.business.domain.DailyTrainTicket;
 import top.lxyi.train.business.mapper.DailyTrainTicketMapper;
 import top.lxyi.train.common.exception.BusinessException;
@@ -72,10 +73,13 @@ public class TrainService {
             return null;
         }
     }
+    @Transactional
     public List<TrainQueryResp> queryAll() {
-        TrainExample trainExample = new TrainExample();
-        trainExample.setOrderByClause("code desc");
-        List<Train> trainList = trainMapper.selectByExample(trainExample);
+//        TrainExample trainExample = new TrainExample();
+//        trainExample.setOrderByClause("code desc");
+//        List<Train> trainList = trainMapper.selectByExample(trainExample);
+        List<Train> trainList = selectAll();
+        trainList = selectAll();
         return BeanUtil.copyToList(trainList, TrainQueryResp.class);
     }
     public PageResp<TrainQueryResp> queryList(TrainQueryReq req) {

@@ -14,6 +14,8 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    local-cache-scope: session
 
 logging:
   level:

@@ -13,13 +13,13 @@ spring:
       routes[1]:
         id: business
 #        uri: http://127.0.0.1:8002
-        uri: lb//business
+        uri: lb://business
         predicates:
           - Path=/business/**
       routes[2]:
         id: batch
 #        uri: http://127.0.0.1:8003
-        uri: lb//batch
+        uri: lb://batch
         predicates:
           - Path=/batch/**
       globalcors:

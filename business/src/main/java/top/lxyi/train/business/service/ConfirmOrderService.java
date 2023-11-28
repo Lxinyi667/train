@@ -3,6 +3,7 @@ package top.lxyi.train.business.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -10,6 +11,10 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import top.lxyi.train.business.domain.*;
 import top.lxyi.train.business.enums.ConfirmOrderStatusEnum;
 import top.lxyi.train.business.enums.SeatColEnum;
@@ -32,6 +37,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ConfirmOrderService {
@@ -53,6 +59,11 @@ public class ConfirmOrderService {
 
     @Resource
     private AfterConfirmOrderService afterConfirmOrderService;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     public void save(ConfirmOrderDoReq req) {
         DateTime now = DateTime.now();
@@ -95,9 +106,36 @@ public class ConfirmOrderService {
     }
 
 
-    public synchronized void doConfirm(ConfirmOrderDoReq req){
-        //省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期间内，tickets条数>0，同乘客同车次是否已买过
+    public void doConfirm(ConfirmOrderDoReq req){
 
+        String lockKey = DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
+        RLock lock = null;
+
+        try {
+            // 使用redisson，自带看门狗
+            lock = redissonClient.getLock(lockKey);
+            /**
+             waitTime – the maximum time to acquire the lock 等待获取锁时间(最大尝试获得锁的时间)，超时返回false
+             leaseTime – lease time 锁时长，即n秒后自动释放锁
+             time unit – time unit 时间单位
+             */
+            // boolean tryLock = lock.tryLock(30, 10, TimeUnit.SECONDS); // 不带看门狗
+            boolean tryLock = lock.tryLock(0, TimeUnit.SECONDS); // 带看门狗
+            if (tryLock) {
+                LOG.info("恭喜，抢到锁了！");
+                // 可以把下面这段放开，只用一个线程来测试，看看redisson的看门狗效果
+                // for (int i = 0; i < 30; i++) {
+                //     Long expire = redisTemplate.opsForValue().getOperations().getExpire(lockKey);
+                //     LOG.info("锁过期时间还有：{}", expire);
+                //     Thread.sleep(1000);
+                // }
+            } else {
+                // 只是没抢到锁，并不知道票抢完了没，所以提示稍候再试
+                LOG.info("很遗憾，没抢到锁");
+                throw new BusinessException(BusinessExceptionEnum.NONE);
+            }
+
+            //省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期间内，tickets条数>0，同乘客同车次是否已买过
         Date date = req.getDate();
 
         String trainCode = req.getTrainCode();
@@ -126,7 +164,7 @@ public class ConfirmOrderService {
         LOG.info("查出余票记录：{}",dailyTrainTicket);
 
         //扣减余票数量，并判断余票是否足够
-        reduceTickets(req,dailyTrainTicket);
+            reduceTickets(req, dailyTrainTicket);
         LOG.info("扣减余票数量：{}",dailyTrainTicket);
 
         // 最终的选座结果
@@ -163,6 +201,7 @@ public class ConfirmOrderService {
                 int offset = index - aboluteOffsetList.get(0);
                 offsetList.add(offset);
             }
+
             LOG.info("计算得到所有座位的相对第一个座位的偏移值：{}", offsetList);
 
             getSeat(
@@ -216,7 +255,16 @@ public class ConfirmOrderService {
         //余票详情表修改余票
         //为会员增加购票记录
         //更新确认订单为成功
+        } catch (InterruptedException e) {
+            LOG.error("购票异常", e);
+        } finally {
+            LOG.info("购票流程结束，释放锁！");
+            if (null != lock && lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
     }
+
 
 
     /**

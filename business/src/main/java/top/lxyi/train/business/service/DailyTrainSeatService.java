@@ -59,7 +59,7 @@ public class DailyTrainSeatService {
         dailyTrainSeatMapper.deleteByExample(dailyTrainSeatExample);
 
         List<TrainStation> stationList = trainStationService.selectByTrainCode(trainCode);
-        String sell = StrUtil.fillBefore("",'0',stationList.size() - 1);
+        String sell = StrUtil.fillBefore("",'0',stationList.size());
 
         //查出某车次的所有座位信息
         List<TrainSeat> seatList =trainSeatService.selectByTrainCode(trainCode);
@@ -74,6 +74,7 @@ public class DailyTrainSeatService {
             dailyTrainSeat.setCreateTime(now);
             dailyTrainSeat.setUpdateTime(now);
             dailyTrainSeat.setDate(date);
+            dailyTrainSeat.setSell(sell);
             dailyTrainSeatMapper.insert(dailyTrainSeat);
         }
         LOG.info("生成日期【{}】车次【{}】的座位信息结束",DateUtil.formatDate(date),trainCode);

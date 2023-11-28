@@ -50,6 +50,7 @@ public class ConfirmOrderService {
 
     @Resource
     private DailyTrainSeatService dailyTrainSeatService;
+
     @Resource
     private AfterConfirmOrderService afterConfirmOrderService;
 
@@ -93,18 +94,20 @@ public class ConfirmOrderService {
         confirmOrderMapper.deleteByPrimaryKey(id);
     }
 
-    public void doConfirm(ConfirmOrderDoReq req) {
-        // 省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期内，tickets条数>0，同乘客同车次是否已买过
+
+    public synchronized void doConfirm(ConfirmOrderDoReq req){
+        //省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期间内，tickets条数>0，同乘客同车次是否已买过
 
         Date date = req.getDate();
+
         String trainCode = req.getTrainCode();
         String start = req.getStart();
         String end = req.getEnd();
         List<ConfirmOrderTicketReq> tickets = req.getTickets();
 
-        // 保存确认订单表，状态初始
-        DateTime now = DateTime.now();
-        ConfirmOrder confirmOrder = new ConfirmOrder();
+        //保存确认订单，状态初始
+        DateTime now=DateTime.now();
+        ConfirmOrder confirmOrder=new ConfirmOrder();
         confirmOrder.setId(SnowUtil.getSnowflakeNextId());
         confirmOrder.setCreateTime(now);
         confirmOrder.setUpdateTime(now);
@@ -115,18 +118,20 @@ public class ConfirmOrderService {
         confirmOrder.setEnd(end);
         confirmOrder.setDailyTrainTicketId(req.getDailyTrainTicketId());
         confirmOrder.setStatus(ConfirmOrderStatusEnum.INIT.getCode());
-        confirmOrder.setTickets(JSON.toJSONString(tickets));
+        confirmOrder.setTickets(JSON.toJSONString(req.getTickets()));
         confirmOrderMapper.insert(confirmOrder);
 
-        // 查出余票记录，需要得到真实的库存
-        DailyTrainTicket dailyTrainTicket = dailyTrainTicketService.selectByUnique(date, trainCode, start, end);
-        LOG.info("查出余票记录：{}", dailyTrainTicket);
+        //查出余票记录，需要得到真实的库存
+        DailyTrainTicket dailyTrainTicket= dailyTrainTicketService.selectByUnique(date,trainCode,start,end);
+        LOG.info("查出余票记录：{}",dailyTrainTicket);
 
-        // 预扣减余票数量，并判断余票是否足够
-        reduceTickets(req, dailyTrainTicket);
+        //扣减余票数量，并判断余票是否足够
+        reduceTickets(req,dailyTrainTicket);
+        LOG.info("扣减余票数量：{}",dailyTrainTicket);
 
         // 最终的选座结果
         List<DailyTrainSeat> finalSeatList = new ArrayList<>();
+
         // 计算相对第一个座位的偏移值
         // 比如选择的是C1,D2，则偏移值是：[0,5]
         // 比如选择的是A1,B1,C1，则偏移值是：[0,1,2]
@@ -160,7 +165,8 @@ public class ConfirmOrderService {
             }
             LOG.info("计算得到所有座位的相对第一个座位的偏移值：{}", offsetList);
 
-            getSeat(finalSeatList,
+            getSeat(
+                    finalSeatList,
                     date,
                     trainCode,
                     ticketReq0.getSeatTypeCode(),
@@ -173,7 +179,8 @@ public class ConfirmOrderService {
         } else {
             LOG.info("本次购票没有选座");
             for (ConfirmOrderTicketReq ticketReq : tickets) {
-                getSeat(finalSeatList,
+                getSeat(
+                        finalSeatList,
                         date,
                         trainCode,
                         ticketReq.getSeatTypeCode(),
@@ -187,20 +194,40 @@ public class ConfirmOrderService {
 
         LOG.info("最终选座：{}", finalSeatList);
 
-        // 选座
 
-        // 一个车箱一个车箱的获取座位数据
+        //选中座位后事务处理
+        //座位表修改售卖情况sell
+        //余票详情表修改余票
+        //为会员增加购票记录
+        //更新确认订单为成功
+        afterConfirmOrderService.afterDoConfirm(dailyTrainTicket,finalSeatList,tickets,confirmOrder);
 
-        // 挑选符合条件的座位，如果这个车箱不满足，则进入下个车箱（多个选座应该在同一个车厢）
 
-        // 选中座位后事务处理：
-        afterConfirmOrderService.afterDoConfirm(dailyTrainTicket, finalSeatList, tickets, confirmOrder);
-        // 座位表修改售卖情况sell；
-        // 余票详情表修改余票；
-        // 为会员增加购票记录
-        // 更新确认订单为成功
+        //选座
+
+
+        //一个车厢一个车厢的获取座位数据
+
+        //挑选符合条件的座位，如果这个车厢不满足，则进入下个车厢（多个选座应该在同一个车厢）
+
+        //选中座位后事务处理
+
+        //座位表修改售卖情况sell
+        //余票详情表修改余票
+        //为会员增加购票记录
+        //更新确认订单为成功
     }
 
+
+    /**
+     * 挑座位，如果有选座，则一次性挑完，如果无选座，则一个一个挑
+     *
+     * @param date
+     * @param trainCode
+     * @param seatType
+     * @param column
+     * @param offsetList
+     */
     /**
      * 挑座位，如果有选座，则一次性挑完，如果无选座，则一个一个挑
      *

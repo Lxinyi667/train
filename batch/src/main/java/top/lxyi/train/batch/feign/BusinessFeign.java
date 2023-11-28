@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import top.lxyi.train.common.resp.CommonResp;
 
 import java.util.Date;
-@FeignClient(name = "business")
+@FeignClient(name = "business",path = "business")
 //@FeignClient(name = "business",url = "http://127.0.0.1:8002/business")
 public interface BusinessFeign {
     @GetMapping("/hello")

@@ -8,9 +8,12 @@ import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,9 +108,13 @@ public class ConfirmOrderService {
         confirmOrderMapper.deleteByPrimaryKey(id);
     }
 
-
+    public void doConfirm(ConfirmOrderDoReq req, BlockException e){
+        LOG.info("购票请求被限流：{}",req);
+        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_FLOW_EXCEPTION);
+    }
+    @SentinelResource(value = "doConfirm",blockHandler = "doConfirmBlock")
     public void doConfirm(ConfirmOrderDoReq req){
-
+        //省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期间内，tickets条数>0，同乘客同车次是否已买过
         String lockKey = DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
         RLock lock = null;
 
@@ -132,10 +139,9 @@ public class ConfirmOrderService {
             } else {
                 // 只是没抢到锁，并不知道票抢完了没，所以提示稍候再试
                 LOG.info("很遗憾，没抢到锁");
-                throw new BusinessException(BusinessExceptionEnum.NONE);
+                throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
             }
 
-            //省略业务数据校验，如：车次是否存在，余票是否存在，车次是否在有效期间内，tickets条数>0，同乘客同车次是否已买过
         Date date = req.getDate();
 
         String trainCode = req.getTrainCode();
@@ -164,7 +170,7 @@ public class ConfirmOrderService {
         LOG.info("查出余票记录：{}",dailyTrainTicket);
 
         //扣减余票数量，并判断余票是否足够
-            reduceTickets(req, dailyTrainTicket);
+        reduceTickets(req,dailyTrainTicket);
         LOG.info("扣减余票数量：{}",dailyTrainTicket);
 
         // 最终的选座结果
@@ -201,7 +207,6 @@ public class ConfirmOrderService {
                 int offset = index - aboluteOffsetList.get(0);
                 offsetList.add(offset);
             }
-
             LOG.info("计算得到所有座位的相对第一个座位的偏移值：{}", offsetList);
 
             getSeat(
@@ -264,7 +269,6 @@ public class ConfirmOrderService {
             }
         }
     }
-
 
 
     /**

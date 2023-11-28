@@ -31,18 +31,18 @@ public class BusinessApplication {
         LOG.info("测试地址：\thttp://I27.0.0.1:{}{}/hello",env.getProperty("server.port"),env.getProperty("server.servlet.context-path"));
 
         // 限流规则
-        initFlowRules();
-        LOG.info("已定义限流规则");
+//        initFlowRules();
+//        LOG.info("已定义限流规则");
     }
 
-    private static void initFlowRules(){
-        List<FlowRule> rules = new ArrayList<>();
-        FlowRule rule = new FlowRule();
-        rule.setResource("HelloWorld");
-        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
-        // Set limit QPS to 20.
-        rule.setCount(20);
-        rules.add(rule);
-        FlowRuleManager.loadRules(rules);
-    }
+//    private static void initFlowRules(){
+//        List<FlowRule> rules = new ArrayList<>();
+//        FlowRule rule = new FlowRule();
+//        rule.setResource("HelloWorld");
+//        rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
+//        // Set limit QPS to 20.
+//        rule.setCount(20);
+//        rules.add(rule);
+//        FlowRuleManager.loadRules(rules);
+//    }
 }

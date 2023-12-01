@@ -2,7 +2,8 @@
   <p>
     <a-space>
       <train-select-view v-model="params.trainCode" width="200px"/>
-      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"/>
+      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD"
+       placeholder="请选择日期" :disabled-date="disabledDate"/>
       <station-select-view v-model="params.start" width="200px"/>
       <station-select-view v-model="params.end" width="200px"/>
       <a-button type="primary" @click="handleQuery()">查找</a-button>
@@ -150,7 +151,10 @@ const dailyTrainTicket = ref({
 })
 
 const dailyTrainTickets = ref([])
-
+// 不能选择今天以前及两周以后的日期
+const disabledDate = current => {
+  return current && (current <= dayjs().add(-1, 'day') || current > dayjs().add(14, 'day'))
+}
 // 分页的三个属性名是固定的
 const pagination = ref({
   total: 0,

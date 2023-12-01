@@ -523,44 +523,44 @@ const showImageCodeModal = () => {
   imageCodeModalVisible.value = true
 }
 
-/* ------------------- 第一层验证码 --------------------- */
-const firstImageCodeSourceA = ref()
-const firstImageCodeSourceB = ref()
-const firstImageCodeTarget = ref()
-const firstImageCodeModalVisible = ref()
+// /* ------------------- 第一层验证码 --------------------- */
+// const firstImageCodeSourceA = ref()
+// const firstImageCodeSourceB = ref()
+// const firstImageCodeTarget = ref()
+// const firstImageCodeModalVisible = ref()
 
-/**
- * 加载第一层验证码
- */
-const loadFirstImageCode = () => {
-  // 获取1~10的数：Math.floor(Math.random()*10 + 1)
-  firstImageCodeSourceA.value = Math.floor(Math.random() * 10 + 1) + 10
-  firstImageCodeSourceB.value = Math.floor(Math.random() * 10 + 1) + 20
-}
+// /**
+//  * 加载第一层验证码
+//  */
+// const loadFirstImageCode = () => {
+//   // 获取1~10的数：Math.floor(Math.random()*10 + 1)
+//   firstImageCodeSourceA.value = Math.floor(Math.random() * 10 + 1) + 10
+//   firstImageCodeSourceB.value = Math.floor(Math.random() * 10 + 1) + 20
+// }
 
-/**
- * 显示第一层验证码弹出框
- */
-const showFirstImageCodeModal = () => {
-  loadFirstImageCode()
-  firstImageCodeModalVisible.value = true
-}
+// /**
+//  * 显示第一层验证码弹出框
+//  */
+// const showFirstImageCodeModal = () => {
+//   loadFirstImageCode()
+//   firstImageCodeModalVisible.value = true
+// }
 
-/**
- * 校验第一层验证码
- */
-const validFirstImageCode = () => {
-  if (
-    parseInt(firstImageCodeTarget.value) ===
-    parseInt(firstImageCodeSourceA.value + firstImageCodeSourceB.value)
-  ) {
-    // 第一层验证通过
-    firstImageCodeModalVisible.value = false
-    showImageCodeModal()
-  } else {
-    notification.error({ description: '验证码错误' })
-  }
-}
+// /**
+//  * 校验第一层验证码
+//  */
+// const validFirstImageCode = () => {
+//   if (
+//     parseInt(firstImageCodeTarget.value) ===
+//     parseInt(firstImageCodeSourceA.value + firstImageCodeSourceB.value)
+//   ) {
+//     // 第一层验证通过
+//     firstImageCodeModalVisible.value = false
+//     showImageCodeModal()
+//   } else {
+//     notification.error({ description: '验证码错误' })
+//   }
+// }
 
 /**
  * 取消排队

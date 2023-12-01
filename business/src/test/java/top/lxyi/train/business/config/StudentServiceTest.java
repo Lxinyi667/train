@@ -20,17 +20,17 @@ class StudentServiceTest {
     @Test
     void save(){
 //        Faker faker1=new Faker();
-        for(int i=0;i<100000;i++){
-            Faker faker =new Faker(new Locale("zh-CN"));
-
-            Student student=new Student();
-            student.setId(SnowUtil.getSnowflakeNextId());
-            student.setAge(new Random().nextInt(30)+1);
-            student.setName(faker.name().fullName());
-            student.setPhonenumber(faker.phoneNumber().cellPhone());
-            student.setEmail(faker.internet().emailAddress());
-            student.setSchool(faker.university().name());
-            studentMapper.insert(student);
-    }
+//        for(int i=0;i<100000;i++){
+//            Faker faker =new Faker(new Locale("zh-CN"));
+//
+//            Student student=new Student();
+//            student.setId(SnowUtil.getSnowflakeNextId());
+//            student.setAge(new Random().nextInt(30)+1);
+//            student.setName(faker.name().fullName());
+//            student.setPhonenumber(faker.phoneNumber().cellPhone());
+//            student.setEmail(faker.internet().emailAddress());
+//            student.setSchool(faker.university().name());
+//            studentMapper.insert(student);
+//    }
 }
 }

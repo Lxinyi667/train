@@ -7,7 +7,11 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-
+/**
+ * @author mqxu
+ * @date 2023/11/30
+ * @description KaptchaNoBackground
+ **/
 public class KaptchaNoBackground extends Configurable implements BackgroundProducer {
 
     public KaptchaNoBackground() {

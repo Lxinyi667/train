@@ -18,7 +18,6 @@
 
     <modules>
         <module>member</module>
-        <module>member</module>
         <module>common</module>
         <module>gateway</module>
         <module>generator</module>

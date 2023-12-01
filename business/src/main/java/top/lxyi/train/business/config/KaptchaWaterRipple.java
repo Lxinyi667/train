@@ -1,4 +1,5 @@
 package top.lxyi.train.business.config;
+
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;
 import com.google.code.kaptcha.util.Configurable;
@@ -8,6 +9,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.Random;
+
+/**
+ * @author mqxu
+ * @date 2023/11/30
+ * @description KaptchaWaterRipple
+ **/
 public class KaptchaWaterRipple extends Configurable implements GimpyEngine {
     public KaptchaWaterRipple() {
     }

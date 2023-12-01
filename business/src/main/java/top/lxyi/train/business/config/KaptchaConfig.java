@@ -1,10 +1,17 @@
 package top.lxyi.train.business.config;
+
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
+
+/**
+ * @author mqxu
+ * @date 2023/11/30
+ * @description KaptchaConfig
+ **/
 @Configuration
 public class KaptchaConfig {
     @Bean

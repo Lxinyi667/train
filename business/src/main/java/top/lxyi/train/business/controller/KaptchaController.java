@@ -1,4 +1,5 @@
 package top.lxyi.train.business.controller;
+
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletOutputStream;

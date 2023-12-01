@@ -109,13 +109,13 @@
           <stringProp name="LoopController.loops">1</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.num_threads">20</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.delayedStart">false</boolProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="购票" enabled="true">
@@ -168,7 +168,7 @@
               </elementProp>
               <elementProp name="token" elementType="Header">
                 <stringProp name="Header.name">token</stringProp>
-                <stringProp name="Header.value">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MDExNTA2NDksIm1vYmlsZSI6IjEzMzAwMDAxMTcxIiwiaWQiOjE3MjY1NzA3NTQ0NjU3MzA1NjAsImV4cCI6MTcwMTE5Mzg0OSwiaWF0IjoxNzAxMTUwNjQ5fQ.-UO0DCzjsf3eSlZg7ZIMsLZPdZTUszVP3ile72wzObA</stringProp>
+                <stringProp name="Header.value">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3MDEzOTcyMjgsIm1vYmlsZSI6IjEzMzAwMDAxMTcxIiwiaWQiOjE3MjY1NzA3NTQ0NjU3MzA1NjAsImV4cCI6MTcwMTQ0MDQyOCwiaWF0IjoxNzAxMzk3MjI4fQ.qU_1hyKOfsMzTfRFLJ7_Vw5CTN_scPkbNpPLmgqPfYc</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>

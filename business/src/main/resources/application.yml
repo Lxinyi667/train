@@ -20,6 +20,10 @@ spring:
       transport:
         port: 8719
         dashboard: localhost:8080
+rocketmq:
+  name-server: http://43.137.12.232:9876
+  producer:
+    group: default
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

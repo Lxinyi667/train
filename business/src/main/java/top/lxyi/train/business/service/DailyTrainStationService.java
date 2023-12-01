@@ -97,10 +97,17 @@ public PageResp<DailyTrainStationQueryResp> queryList(DailyTrainStationQueryReq 
             pageResp.setTotal(pageInfo.getTotal());
             pageResp.setList(list);
             return pageResp;
-            }
-
-            public void delete(Long id) {
+}
+public void delete(Long id) {
             dailyTrainStationMapper.deleteByPrimaryKey(id);
             }
 
-            }
+    /**
+     * 按车次查询全部车站
+     */
+    public long countByTrainCode(Date date, String trainCode) {
+        DailyTrainStationExample example = new DailyTrainStationExample();
+        example.createCriteria().andDateEqualTo(date).andTrainCodeEqualTo(trainCode);
+        return dailyTrainStationMapper.countByExample(example);
+    }
+}

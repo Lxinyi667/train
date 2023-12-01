@@ -16,7 +16,8 @@
            :loading="loading">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
-        <a-button type="primary" @click="toOrder(record)">预订</a-button>
+        <a-button type="primary" @click="toOrder(record)"
+        :disabled="isExpire(record)">{{isExpire(record) ? "过期" : "预定"}}</a-button>
         <router-link :to="{
           path: '/seat',
           query: {
@@ -239,6 +240,18 @@ const showStation = record => {
       notification.error({ description: data.message })
     }
   })
+}
+// 判断是否过期
+const isExpire = (record) => {
+  // 标准时间：2000/01/01 00:00:00
+  const startDateTimeString = record.date.replace(/-/g, '/') + ' ' + record.startTime
+  const startDateTime = new Date(startDateTimeString)
+
+  // 当前时间
+  const now = new Date()
+
+  console.log(startDateTime)
+  return now.valueOf() >= startDateTime.valueOf()
 }
 const onDelete = (record) => {
   axios.delete('/business/daily-train-ticket/delete/' + record.id).then((response) => {

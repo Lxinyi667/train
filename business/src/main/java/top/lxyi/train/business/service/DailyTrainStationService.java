@@ -110,4 +110,14 @@ public void delete(Long id) {
         example.createCriteria().andDateEqualTo(date).andTrainCodeEqualTo(trainCode);
         return dailyTrainStationMapper.countByExample(example);
     }
+    /**
+     * 按车次日期查询车站列表，用于界面显示一列车经过的车站
+     */
+    public List<DailyTrainStationQueryResp> queryByTrain(Date date, String trainCode) {
+        DailyTrainStationExample dailyTrainStationExample = new DailyTrainStationExample();
+        dailyTrainStationExample.setOrderByClause("`index` asc");
+        dailyTrainStationExample.createCriteria().andDateEqualTo(date).andTrainCodeEqualTo(trainCode);
+        List<DailyTrainStation> list = dailyTrainStationMapper.selectByExample(dailyTrainStationExample);
+        return BeanUtil.copyToList(list, DailyTrainStationQueryResp.class);
+    }
 }

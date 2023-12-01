@@ -26,6 +26,12 @@
                         我的车票
                     </router-link>
                 </a-menu-item>
+                <a-menu-item key="/seat">
+                    <router-link to="/seat">
+                        <UsergroupAddOutlined/>
+                        座位销售图
+                    </router-link>
+                </a-menu-item>
         </a-menu>
     </a-layout-sider>
 </template>

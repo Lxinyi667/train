@@ -26,7 +26,11 @@ public class CommonResp<T> {
     public CommonResp(T content) {
         this.content = content;
     }
-
+    public CommonResp(boolean success, String message, T content) {
+        this.success = success;
+        this.message = message;
+        this.content = content;
+    }
     public boolean getSuccess() {
         return success;
     }

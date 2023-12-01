@@ -442,9 +442,9 @@ const handleOk = () => {
       trainCode: dailyTrainTicket.trainCode,
       start: dailyTrainTicket.start,
       end: dailyTrainTicket.end,
-      tickets: tickets.value
-      //  imageCodeToken: imageCodeToken.value,
-      //  imageCode: imageCode.value,
+      tickets: tickets.value,
+      imageCodeToken: imageCodeToken.value,
+      imageCode: imageCode.value
       //  lineNumber: lineNumber.value,
     })
     .then((response) => {

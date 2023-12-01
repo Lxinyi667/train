@@ -1,38 +1,24 @@
 package top.lxyi.train.business.domain;
 
-import com.github.javafaker.Faker;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-
 public class Student {
-    private long id;
-    private String phoneNumber;
+    private Long id;
+
     private String name;
-    private int age;
+
+    private String phonenumber;
+
+    private Integer age;
+
     private String email;
+
     private String school;
 
-
-
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {
@@ -43,11 +29,19 @@ public class Student {
         this.name = name;
     }
 
-    public int getAge() {
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -67,31 +61,19 @@ public class Student {
         this.school = school;
     }
 
-
-
-    // Constructors, getters, setters, and toString methods
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return id == student.id && age == student.age && Objects.equals(phoneNumber, student.phoneNumber)
-                && Objects.equals(name, student.name) && Objects.equals(email, student.email)
-                && Objects.equals(school, student.school);
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", name=").append(name);
+        sb.append(", phonenumber=").append(phonenumber);
+        sb.append(", age=").append(age);
+        sb.append(", email=").append(email);
+        sb.append(", school=").append(school);
+        sb.append("]");
+        return sb.toString();
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, phoneNumber, name, age, email, school);
-    }
-//    public Student(long id, String name, int age, String phoneNumber, String email, String school) {
-//        this.id = id;
-//        this.name = name;
-//        this.age = age;
-//        this.phoneNumber = phoneNumber;
-//        this.email = email;
-//        this.school = school;
-//    }
-// 数据生成类
 }

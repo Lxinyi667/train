@@ -15,6 +15,12 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.TimeUnit;
+
+/**
+ * @author mqxu
+ * @date 2023/11/30
+ * @description KaptchaController
+ **/
 @RestController
 @RequestMapping("/kaptcha")
 public class KaptchaController {

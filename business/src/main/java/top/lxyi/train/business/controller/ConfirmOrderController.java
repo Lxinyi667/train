@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.lxyi.train.business.req.ConfirmOrderDoReq;
+import top.lxyi.train.business.service.BeforeConfirmOrderService;
 import top.lxyi.train.business.service.ConfirmOrderService;
 import top.lxyi.train.business.service.ConfirmOrderService;
 import top.lxyi.train.common.exception.BusinessExceptionEnum;
@@ -25,7 +26,8 @@ import top.lxyi.train.common.resp.CommonResp;
 public class ConfirmOrderController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConfirmOrderController.class);
-
+    @Resource
+    private BeforeConfirmOrderService beforeConfirmOrderService;
 
     @Resource
     private ConfirmOrderService confirmOrderService;
@@ -52,8 +54,22 @@ public class ConfirmOrderController {
             // 验证通过后，移除验证码
             redisTemplate.delete(imageCodeToken);
         }
-        confirmOrderService.doConfirm(req);
+        beforeConfirmOrderService.beforeDoConfirm(req);
         return new CommonResp<>();
     }
+    /**
+     * 降级方法，需包含限流方法的所有参数和BlockException参数，且返回值要保持一致
+     *
+     * @param req
+     * @param e
+     */
+    public CommonResp<Object> doConfirmBlock(ConfirmOrderDoReq req, BlockException e) {
+        LOG.info("ConfirmOrderController购票请求被限流：{}", req);
+        // throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_FLOW_EXCEPTION);
+        CommonResp<Object> commonResp = new CommonResp<>();
+        commonResp.setSuccess(false);
+        commonResp.setMessage(BusinessExceptionEnum.CONFIRM_ORDER_FLOW_EXCEPTION.getDesc());
+        return commonResp;
 
+    }
 }

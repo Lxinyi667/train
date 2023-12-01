@@ -9,6 +9,8 @@ import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import top.lxyi.train.business.domain.*;
+import top.lxyi.train.business.req.SeatSellReq;
+import top.lxyi.train.business.resp.SeatSellResp;
 import top.lxyi.train.common.resp.PageResp;
 import top.lxyi.train.common.util.SnowUtil;
 import top.lxyi.train.business.mapper.DailyTrainSeatMapper;
@@ -137,7 +139,20 @@ public class DailyTrainSeatService {
     public void delete(Long id) {
         dailyTrainSeatMapper.deleteByPrimaryKey(id);
     }
-
+    /**
+     * 查询某日某车次的所有座位
+     */
+    public List<SeatSellResp> querySeatSell(SeatSellReq req) {
+        Date date = req.getDate();
+        String trainCode = req.getTrainCode();
+        LOG.info("查询日期【{}】车次【{}】的座位销售信息", DateUtil.formatDate(date), trainCode);
+        DailyTrainSeatExample dailyTrainSeatExample = new DailyTrainSeatExample();
+        dailyTrainSeatExample.setOrderByClause("`carriage_index` asc, carriage_seat_index asc");
+        dailyTrainSeatExample.createCriteria()
+                .andDateEqualTo(date)
+                .andTrainCodeEqualTo(trainCode);
+        return BeanUtil.copyToList(dailyTrainSeatMapper.selectByExample(dailyTrainSeatExample), SeatSellResp.class);
+    }
 //    public void genDaily(Date date) {
 //        List<Train> trainList = trainService.selectAll();
 //        if (CollUtil.isEmpty(trainList)) {

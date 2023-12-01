@@ -1,0 +1,6 @@
+###
+GET http://localhost:8000/business/seat-sell/query?date=2023-12-02&trainCode=G1
+Accept: application/json
+token: {{token}}
+
+###

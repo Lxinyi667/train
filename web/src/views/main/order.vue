@@ -78,7 +78,7 @@
     style="top: 50px; width: 800px"
     ok-text="确认"
     cancel-text="取消"
-    @ok="handleOk"
+    @ok="showImageCodeModal"
   >
     <!-- @ok="showFirstImageCodeModal" -->
 
@@ -112,7 +112,7 @@
         </a-col>
       </a-row>
       <br />
-      选座对象chooseSeatType: {{ chooseSeatObj }}
+      <!-- 选座对象chooseSeatType: {{ chooseSeatObj }} -->
 
       <br />
 
@@ -145,10 +145,10 @@
         </div>
       </div>
       <br />
-      最终购票：{{ tickets }} 最终选座：{{ chooseSeatObj }}
+      <!-- 最终购票：{{ tickets }} 最终选座：{{ chooseSeatObj }} -->
     </div>
   </a-modal>
-  <a-modal
+  <!-- <a-modal
     v-model:visible="firstImageCodeModalVisible"
     :title="null"
     :footer="null"
@@ -169,8 +169,20 @@
     <a-button type="danger" block @click="validFirstImageCode"
       >提交验证码</a-button
     >
+  </a-modal> -->
+ <!-- 验证码 -->
+  <a-modal v-model:visible="imageCodeModalVisible" :title="null" :footer="null" :closable="false"
+           style="top: 50px; width: 400px">
+    <p style="text-align: center; font-weight: bold; font-size: 18px">使用验证码削弱瞬时高峰</p>
+    <p>
+      <a-input v-model:value="imageCode" placeholder="图片验证码">
+        <template #suffix>
+          <img v-show="!!imageCodeSrc" :src="imageCodeSrc" alt="验证码" v-on:click="loadImageCode()"/>
+        </template>
+      </a-input>
+    </p>
+    <a-button type="danger" block @click="handleOk">输入验证码后开始购票</a-button>
   </a-modal>
-
   <a-modal
     v-model:visible="lineModalVisible"
     title="排队购票"
